@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('username');
             $table->string('password');
             $table->string('nip')->unique()->nullable();
-            $table->enum('role', ['admin', 'user','kepala_kua'])->default('user');
+            $table->enum('role', ['admin', 'user','kepala_kua'])->default('user'); //user = pegawai
             $table->rememberToken();
             $table->timestamps();
         });
