@@ -1,14 +1,14 @@
-@extends('layouts.app', ['title' => 'Tambah Data Siswa'])
+@extends('layouts.app', ['title' => 'Tambah Data Pegawai'])
 
 @section('content')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Siswa</h1>
+                <h1>Tambah Pegawai</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('siswa.index') }}">Data Siswa</a></div>
-                    <div class="breadcrumb-item active">Tambah Siswa</div>
+                    <div class="breadcrumb-item"><a href="{{ route('pegawai.index') }}">Data Pegawai</a></div>
+                    <div class="breadcrumb-item active">Tambah Pegawai</div>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Formulir Pendaftaran Siswa</h4>
+                                <h4>Formulir Pendaftaran Pegawai</h4>
                             </div>
                             <div class="card-body">
                                 @if ($errors->any())
@@ -35,68 +35,42 @@
                                     </div>
                                 @endif
 
-                                <form action="{{ route('siswa.store') }}" method="POST">
+                                <form action="{{ route('pegawai.store') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="role" value="siswa">
-                                    
+
                                     <div class="row">
                                         <!-- Left Column -->
                                         <div class="col-md-6">
                                             <!-- Personal Information -->
                                             <div class="form-group">
                                                 <label>Nama Lengkap <span class="text-danger">*</span></label>
-                                                <input type="text" name="name" class="form-control" 
+                                                <input type="text" name="name" class="form-control"
                                                     value="{{ old('name') }}" required>
                                             </div>
 
                                             <div class="form-group">
                                                 <label>Username <span class="text-danger">*</span></label>
-                                                <input type="text" name="username" class="form-control" 
+                                                <input type="text" name="username" class="form-control"
                                                     value="{{ old('username') }}" required>
                                             </div>
 
+
+                                        </div>
+
+                                        <!-- Right Column -->
+                                        <div class="col-md-6">
+                                            <!-- Employee Information -->
+                                            <div class="form-group">
+                                                <label>NIP</label>
+                                                <input type="text" name="nip" class="form-control" value="{{ old('nip') }}">
+                                            </div>
                                             <div class="form-group">
                                                 <label>Password <span class="text-danger">*</span></label>
                                                 <input type="password" name="password" class="form-control" required>
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Kelas <span class="text-danger">*</span></label>
-                                                <select class="form-control" name="class_id" required>
-                                                    <option value="">Pilih Kelas</option>
-                                                    @foreach ($kelas as $item)
-                                                        <option value="{{ $item->id }}" {{ old('class_id') == $item->id ? 'selected' : '' }}>
-                                                            {{ $item->name }} - {{ $item->jurusan }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Right Column -->
-                                        <div class="col-md-6">
-                                            <!-- School Information -->
-                                            <div class="form-group">
-                                                <label>NISN <span class="text-danger">*</span></label>
-                                                <input type="text" name="nisn" class="form-control" 
-                                                    value="{{ old('nisn') }}" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>NIS <span class="text-danger">*</span></label>
-                                                <input type="text" name="nis" class="form-control" 
-                                                    value="{{ old('nis') }}" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Nomor HP</label>
-                                                <input type="number" name="no_hp" class="form-control" 
-                                                    value="{{ old('no_hp') }}">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Alamat <span class="text-danger">*</span></label>
-                                                <textarea name="address" class="form-control" rows="3" required>{{ old('address') }}</textarea>
+                                                <input type="hidden" name="role" value="user">
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +79,7 @@
                                         <button type="submit" class="btn btn-primary btn-lg px-5">
                                             <i class="fas fa-save mr-2"></i> Simpan Data
                                         </button>
-                                        <a href="{{ route('siswa.index') }}" class="btn btn-secondary btn-lg px-5 ml-2">
+                                        <a href="{{ route('pegawai.index') }}" class="btn btn-secondary btn-lg px-5 ml-2">
                                             <i class="fas fa-arrow-left mr-2"></i> Kembali
                                         </a>
                                     </div>
@@ -122,24 +96,11 @@
 @push('scripts')
     <script src="{{ asset('library/cleave.js/dist/cleave.min.js') }}"></script>
     <script>
-        // Format NISN input
-        new Cleave('input[name="nisn"]', {
+        // Format NIP input
+        new Cleave('input[name="nip"]', {
             numericOnly: true,
-            blocks: [10],
+            blocks: [18],
             delimiter: ' '
-        });
-
-        // Format NIS input
-        new Cleave('input[name="nis"]', {
-            numericOnly: true,
-            blocks: [8],
-            delimiter: ' '
-        });
-
-        // Format phone number input
-        new Cleave('input[name="no_hp"]', {
-            phone: true,
-            phoneRegionCode: 'ID'
         });
     </script>
 @endpush

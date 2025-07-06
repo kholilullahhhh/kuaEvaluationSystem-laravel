@@ -9,6 +9,7 @@ class Agenda extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id', // ID pengguna yang membuat agenda
         'thumbnail',
         'judul',
         'tempat_kegiatan',
@@ -20,4 +21,14 @@ class Agenda extends Model
         'deskripsi_kegiatan',
         'status', //aktif tidaknya kegitan itu
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    // public function report()
+    // {
+    //     return $this->hasOne(Report::class);
+    // }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Data Siswa'])
+@extends('layouts.app', ['title' => 'Data Pegawai'])
 
 @section('content')
     @push('styles')
@@ -27,10 +27,10 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Siswa</h1>
+                <h1>Data Pegawai</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-                    <div class="breadcrumb-item">Data Siswa</div>
+                    <div class="breadcrumb-item">Data Pegawai</div>
                 </div>
             </div>
 
@@ -39,47 +39,49 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Daftar Siswa</h4>
+                                <h4>Daftar Pegawai</h4>
                                 <div class="card-header-action">
-                                    <a href="{{ route('siswa.create') }}" class="btn btn-primary btn-icon icon-left">
-                                        <i class="fas fa-plus"></i> Tambah Siswa
+                                    <a href="{{ route('pegawai.create') }}" class="btn btn-primary btn-icon icon-left">
+                                        <i class="fas fa-plus"></i> Tambah Pegawai
                                     </a>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-siswa">
+                                    <table class="table table-striped" id="table-pegawai">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama</th>
                                                 <th>Username</th>
-                                                <th>Kelas</th>
-                                                <th>NISN</th>
-                                                <th>NIS</th>
-                                                <th>Alamat</th>
-                                                <th>No Handphone</th>
+                                                <th>NIP</th>
+                                                <th>Role</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($datas as $index => $siswa)
+                                            @foreach ($datas as $index => $user)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $siswa->name }}</td>
-                                                    <td>{{ $siswa->username }}</td>
-                                                    <td>{{ $siswa->class->name ?? '-' }}</td>
-                                                    <td>{{ $siswa->nisn }}</td>
-                                                    <td>{{ $siswa->nis }}</td>
-                                                    <td>{{ $siswa->address ?? '-' }}</td>
-                                                    <td>{{ $siswa->no_hp ?? '-' }}</td>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->username }}</td>
+                                                    <td>{{ $user->nip ?? '-' }}</td>
+                                                    <td>
+                                                        @if($user->role == 'admin')
+                                                            <span class="badge badge-primary">Admin</span>
+                                                        @elseif($user->role == 'kepala_kua')
+                                                            <span class="badge badge-info">Kepala KUA</span>
+                                                        @else
+                                                            <span class="badge badge-info">Pegawai</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <div class="action-buttons">
-                                                            <a href="{{ route('siswa.edit', $siswa->id) }}"
+                                                            <a href="{{ route('pegawai.edit', $user->id) }}"
                                                                 class="btn btn-warning btn-action">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
-                                                            <form action="{{ route('siswa.hapus', $siswa->id) }}" method="POST"
+                                                            <form action="{{ route('pegawai.hapus', $user->id) }}" method="POST"
                                                                 class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -88,7 +90,6 @@
                                                                     <i class="fas fa-trash"></i> Hapus
                                                                 </button>
                                                             </form>
-
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -115,7 +116,7 @@
 
         <script>
             $(document).ready(function () {
-                $('#table-siswa').DataTable();
+                $('#table-pegawai').DataTable();
 
                 // SweetAlert for delete confirmation
                 $('.delete-btn').click(function (e) {
@@ -124,7 +125,7 @@
 
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
-                        text: "Data siswa ini akan dihapus secara permanen!",
+                        text: "Data pegawai ini akan dihapus secara permanen!",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -158,9 +159,7 @@
                         text: '{{ session('error') }}',
                     });
                 @endif
-                                });
+            });
         </script>
     @endpush
-
-
 @endsection

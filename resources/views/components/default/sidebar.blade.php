@@ -22,28 +22,37 @@
                         <span>Master Data</span></a>
                     <ul class="dropdown-menu">
 
-                        <li class="{{ $menu == 'siswa' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('siswa.index') }}">
-                                Data Siswa
-                            </a>
-                        </li>
-                        <li class="{{ $menu == 'kelas' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('kelas.index') }}">
-                                Data Kelas
-                            </a>
-                        </li>
-                        <li class="{{ $menu == 'spp' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('spp.index') }}">
-                                Data SPP
+                        <li class="{{ $menu == 'pegawai' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('pegawai.index') }}">
+                                Data Pegawai
                             </a>
                         </li>
 
                     </ul>
                 </li>
 
-                <li class="{{ $menu == 'payment' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('payment.index') }}">
-                        <i class="fas fa-wallet"></i> <span>Data Transaksi</span>
+                                <li class="nav-item dropdown {{ $menu == 'indikator' || 'indikator_level' ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-sitemap"></i>
+                        <span>Data Indikator</span></a>
+                    <ul class="dropdown-menu">
+
+                        <li class="{{ $menu == 'indikator' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('indikator.index') }}">
+                                Data Indikator
+                            </a>
+                        </li>
+                        <li class="{{ $menu == 'indikator_level' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('indikator_level.index') }}">
+                                Data Level Indikator
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="{{ $menu == 'agenda' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('agenda.index') }}">
+                        <i class="fas fa-wallet"></i> <span>Data Agenda</span>
                     </a>
                 </li>
 

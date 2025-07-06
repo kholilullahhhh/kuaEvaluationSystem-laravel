@@ -126,35 +126,35 @@ Route::group(
             Route::get('/fetch-sekolah', ['GuruController@index', 'fetchSekolah'])->name('fetchSekolah');
 
 
-            // Siswa
-            Route::prefix('siswa')->group(function () {
-                Route::get('/', 'SiswaController@index')->name('siswa.index');
-                Route::get('/create', 'SiswaController@create')->name('siswa.create');
-                Route::post('/store', 'SiswaController@store')->name('siswa.store');
-                Route::get('/edit/{id}', 'SiswaController@edit')->name('siswa.edit');
-                Route::put('/update', 'SiswaController@update')->name('siswa.update');
-                // Route::post('/hapus/{id}', 'SiswaController@destroy')->name('siswa.hapus');
-                Route::delete('/hapus/{id}', 'SiswaController@destroy')->name('siswa.hapus');
+            // Pegawai
+            Route::prefix('pegawai')->group(function () {
+                Route::get('/', 'PegawaiController@index')->name('pegawai.index');
+                Route::get('/create', 'PegawaiController@create')->name('pegawai.create');
+                Route::post('/store', 'PegawaiController@store')->name('pegawai.store');
+                Route::get('/edit/{id}', 'PegawaiController@edit')->name('pegawai.edit');
+                Route::put('/update', 'PegawaiController@update')->name('pegawai.update');
+                // Route::post('/hapus/{id}', 'PegawaiController@destroy')->name('pegawai.hapus');
+                Route::delete('/hapus/{id}', 'PegawaiController@destroy')->name('pegawai.hapus');
             });
 
-            // spp
-            Route::prefix('spp')->group(function () {
-                Route::get('/', 'SppController@index')->name('spp.index');
-                Route::get('/create', 'SppController@create')->name('spp.create');
-                Route::post('/store', 'SppController@store')->name('spp.store');
-                Route::get('/edit/{id}', 'SppController@edit')->name('spp.edit');
-                Route::put('/update', 'SppController@update')->name('spp.update');
-                Route::delete('/hapus/{id}', 'SppController@destroy')->name('spp.hapus');
+            // Indikator
+            Route::prefix('indikator')->group(function () {
+                Route::get('/', 'IndicatorsController@index')->name('indikator.index');
+                Route::get('/create', 'IndicatorsController@create')->name('indikator.create');
+                Route::post('/store', 'IndicatorsController@store')->name('indikator.store');
+                Route::get('/edit/{id}', 'IndicatorsController@edit')->name('indikator.edit');
+                Route::put('/update', 'IndicatorsController@update')->name('indikator.update');
+                Route::delete('/hapus/{id}', 'IndicatorsController@destroy')->name('indikator.hapus');
             });
 
-            // Kelas
-            Route::prefix('kelas')->group(function () {
-                Route::get('/', 'KelasController@index')->name('kelas.index');
-                Route::get('/create', 'KelasController@create')->name('kelas.create');
-                Route::post('/store', 'KelasController@store')->name('kelas.store');
-                Route::get('/edit/{id}', 'KelasController@edit')->name('kelas.edit');
-                Route::put('/update', 'KelasController@update')->name('kelas.update');
-                Route::delete('/hapus/{id}', 'KelasController@destroy')->name('kelas.hapus');
+            // Indikator Level
+            Route::prefix('indikator_level')->group(function () {
+                Route::get('/', 'Indikator_levelController@index')->name('indikator_level.index');
+                Route::get('/create', 'Indikator_levelController@create')->name('indikator_level.create');
+                Route::post('/store', 'Indikator_levelController@store')->name('indikator_level.store');
+                Route::get('/edit/{id}', 'Indikator_levelController@edit')->name('indikator_level.edit');
+                Route::put('/update', 'Indikator_levelController@update')->name('indikator_level.update');
+                Route::delete('/hapus/{id}', 'Indikator_levelController@destroy')->name('indikator_level.hapus');
             });
 
             // payment

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id')->nullable(); // Optional user ID for the creator
             $table->string('thumbnail');
             $table->string('judul');
             $table->string('tempat_kegiatan');

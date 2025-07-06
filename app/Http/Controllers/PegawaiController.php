@@ -7,20 +7,20 @@ use App\Models\Student;
 use App\Models\Classes;
 use App\Models\User;
 use App\Models\Admin;
-use App\Models\Guru;
+use App\Models\Pegawai;
 
-class SiswaController extends Controller
+class PegawaiController extends Controller
 {
-    private $menu = 'siswa';
+    private $menu = 'pegawai';
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $datas = User::where('role', 'siswa')->with(['class', 'spp'])->latest()->get();
+        $datas = User::where('role', 'user')->with(['class', 'spp'])->latest()->get();
         $menu = $this->menu;
-        return view('pages.admin.siswa.index', compact('menu', 'datas'));
+        return view('pages.admin.pegawai.index', compact('menu', 'datas'));
     }
 
     /**
@@ -30,8 +30,8 @@ class SiswaController extends Controller
     {
         $menu = $this->menu;
         $kelas = Classes::all();
-        $user = User::where('role', 'siswa')->get();
-        return view('pages.admin.siswa.create', compact('menu', 'kelas', 'user'));
+        $user = User::where('role', 'user')->get();
+        return view('pages.admin.pegawai.create', compact('menu', 'kelas', 'user'));
     }
 
     /**
@@ -42,10 +42,10 @@ class SiswaController extends Controller
     // {
     //     $r = $request->all();
     //     // dd($r);
-    //     // Menyimpan data guru
+    //     // Menyimpan data Pegawai
     //     // dd($r);
     //     User::create($r);
-    //     return redirect()->route('siswa.index')->with('message', 'Data guru berhasil ditambahkan.');
+    //     return redirect()->route('pegawai.index')->with('message', 'Data Pegawai berhasil ditambahkan.');
     // }
 
     public function store(Request $r)
@@ -58,9 +58,9 @@ class SiswaController extends Controller
             Admin::create($r);
             User::create($r);
 
-            return redirect()->route('siswa.index')->with('message', 'store');
+            return redirect()->route('pegawai.index')->with('message', 'store');
         } else {
-            return redirect()->route('siswa.index')->with('message', 'username sudah ada');
+            return redirect()->route('pegawai.index')->with('message', 'username sudah ada');
         }
     }
 
@@ -74,7 +74,7 @@ class SiswaController extends Controller
         $kelas = Classes::all();
         $menu = $this->menu;
 
-        return view('pages.admin.siswa.edit', compact('data', 'kelas', 'menu'));
+        return view('pages.admin.pegawai.edit', compact('data', 'kelas', 'menu'));
     }
 
     /**
@@ -88,7 +88,7 @@ class SiswaController extends Controller
         // dd($r);
         $data->update($r);
 
-        return redirect()->route('siswa.index')->with('message', 'Data guru berhasil diperbarui.');
+        return redirect()->route('pegawai.index')->with('message', 'Data Pegawai berhasil diperbarui.');
     }
 
 
@@ -104,11 +104,11 @@ class SiswaController extends Controller
             $user->delete();
             $admin->delete();
 
-            return redirect()->route('siswa.index')
+            return redirect()->route('pegawai.index')
                 ->with('message', 'Data siswa dan admin berhasil dihapus.');
 
         } catch (\Exception $e) {
-            return redirect()->route('siswa.index')
+            return redirect()->route('pegawai.index')
                 ->with('error', 'Gagal menghapus data siswa dan admin: ' . $e->getMessage());
         }
     }

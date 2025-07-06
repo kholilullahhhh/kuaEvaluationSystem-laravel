@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Indicators;
 use Illuminate\Http\Request;
-use App\Models\Classes;
 
 
-class KelasController extends Controller
+class IndicatorsController extends Controller
 {
-    private $menu = 'kelas';
+    private $menu = 'indikator';
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $datas = Classes::get();
+        $datas = Indicators::get();
         $menu = $this->menu;
-        return view('pages.admin.kelas.index', compact('menu', 'datas'));
+        return view('pages.admin.indikator.index', compact('menu', 'datas'));
     }
 
     /**
@@ -26,7 +26,7 @@ class KelasController extends Controller
     public function create()
     {
         $menu = $this->menu;
-        return view('pages.admin.kelas.create', compact('menu'));
+        return view('pages.admin.indikator.create', compact('menu'));
     }
 
     /**
@@ -38,10 +38,10 @@ class KelasController extends Controller
         $r = $request->all();
         // dd($r);
 
-        // Menyimpan data guru
-        Classes::create($r);
+        // Menyimpan data Indikator
+        Indicators::create($r);
 
-        return redirect()->route('kelas.index')->with('message', 'Data guru berhasil ditambahkan.');
+        return redirect()->route('indikator.index')->with('message', 'Data Indikator berhasil ditambahkan.');
     }
 
 
@@ -50,10 +50,10 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        $data = Classes::findOrFail($id);
+        $data = Indicators::findOrFail($id);
         $menu = $this->menu;
 
-        return view('pages.admin.kelas.edit', compact('data', 'menu'));
+        return view('pages.admin.indikator.edit', compact('data', 'menu'));
     }
 
     /**
@@ -62,12 +62,12 @@ class KelasController extends Controller
     public function update(Request $request)
     {
         $r = $request->all();
-        $data = Classes::find($r['id']);
+        $data = Indicators::find($r['id']);
 
         // dd($r);
         $data->update($r);
 
-        return redirect()->route('kelas.index')->with('message', 'Data guru berhasil diperbarui.');
+        return redirect()->route('indikator.index')->with('message', 'Data Indikator berhasil diperbarui.');
     }
 
 
@@ -76,10 +76,10 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $data = Classes::find($id);
+        $data = Indicators::find($id);
         $data->delete();
 
-        return redirect()->route('kelas.index')->with('message', 'Data guru berhasil dihapus.');
+        return redirect()->route('indikator.index')->with('message', 'Data Indikator berhasil dihapus.');
     }
 
 }

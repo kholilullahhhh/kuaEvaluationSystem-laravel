@@ -18,14 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'spp_id',
-        'payment_id',
-        'class_id',
         'name',
-        'nisn',
-        'nis',
-        'address',
-        'no_hp',
+        'nip',
         'username',
         'password',
         'role'
@@ -39,12 +33,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(SppPlan::class, 'spp_id', 'id');
     }
-        public function payment()
+    public function payment()
     {
         return $this->hasMany(Payment::class, 'siswa_id', 'id');
     }
-    
-    
+
+
 
     /**
      * The attributes that should be hidden for serialization.
