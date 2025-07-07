@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Data Kelas'])
+@extends('layouts.app', ['title' => 'Data Indikator'])
 
 @section('content')
     @push('styles')
@@ -9,7 +9,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Kelas</h1>
+                <h1>Data Indikator</h1>
             </div>
 
             <div class="section-body">
@@ -17,9 +17,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="mb-0">Daftar Kelas</h4>
+                                <h4 class="mb-0">Daftar Indikator</h4>
                                 <div class="card-header-action">
-                                    <a href="{{ route('kelas.create') }}" class="btn btn-primary">
+                                    <a href="{{ route('indikator.create') }}" class="btn btn-primary">
                                         <i class="bi bi-plus-lg"></i> Tambah Kelas
                                     </a>
                                 </div>
@@ -43,11 +43,11 @@
                                                     <td>{{ $kelas->jurusan }}</td>
                                                     <td>
                                                         <div class="action-buttons">
-                                                            <a href="{{ route('kelas.edit', $kelas->id) }}"
+                                                            <a href="{{ route('indikator.edit', $kelas->id) }}"
                                                                 class="btn btn-warning btn-action">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
-                                                            <form action="{{ route('kelas.hapus', $kelas->id) }}" method="POST"
+                                                            <form action="{{ route('indikator.hapus', $kelas->id) }}" method="POST"
                                                                 class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')

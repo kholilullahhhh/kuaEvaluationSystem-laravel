@@ -17,7 +17,7 @@
             </li>
 
             @if (session('role') == 'admin')
-                <li class="nav-item dropdown {{ $menu == 'siswa' || 'kelas' || 'spp' ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ $menu == 'pegawai' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-sitemap"></i>
                         <span>Master Data</span></a>
                     <ul class="dropdown-menu">
@@ -31,7 +31,7 @@
                     </ul>
                 </li>
 
-                                <li class="nav-item dropdown {{ $menu == 'indikator' || 'indikator_level' ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ $menu == 'indikator' || 'indikator_level' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-sitemap"></i>
                         <span>Data Indikator</span></a>
                     <ul class="dropdown-menu">
@@ -64,10 +64,10 @@
                 </li>
 
                 <li class="menu-header">Landing Page</li>
-                
+
             @endif
 
-            @if (session('role') == 'siswa')
+            @if (session('role') == 'user')
 
                 <li class="{{ $menu == 'midtrans' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('midtrans.index') }}">
@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li class="menu-header">Landing Page</li>
-                
+
             @endif
         </ul>
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

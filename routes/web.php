@@ -149,12 +149,12 @@ Route::group(
 
             // Indikator Level
             Route::prefix('indikator_level')->group(function () {
-                Route::get('/', 'Indikator_levelController@index')->name('indikator_level.index');
-                Route::get('/create', 'Indikator_levelController@create')->name('indikator_level.create');
-                Route::post('/store', 'Indikator_levelController@store')->name('indikator_level.store');
-                Route::get('/edit/{id}', 'Indikator_levelController@edit')->name('indikator_level.edit');
-                Route::put('/update', 'Indikator_levelController@update')->name('indikator_level.update');
-                Route::delete('/hapus/{id}', 'Indikator_levelController@destroy')->name('indikator_level.hapus');
+                Route::get('/', 'IndicatorLevelsController@index')->name('indikator_level.index');
+                Route::get('/create', 'IndicatorLevelsController@create')->name('indikator_level.create');
+                Route::post('/store', 'IndicatorLevelsController@store')->name('indikator_level.store');
+                Route::get('/edit/{id}', 'IndicatorLevelsController@edit')->name('indikator_level.edit');
+                Route::put('/update', 'IndicatorLevelsController@update')->name('indikator_level.update');
+                Route::delete('/hapus/{id}', 'IndicatorLevelsController@destroy')->name('indikator_level.hapus');
             });
 
             // payment

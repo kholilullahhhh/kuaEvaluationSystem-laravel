@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SppPlan;
+use App\Models\Indicator_levels;
 
-class SppController extends Controller
+class IndicatorLevelsController extends Controller
 {
-    private $menu = 'spp';
+    private $menu = 'indikator_level';
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $datas = SppPlan::get();
+        $datas = Indicator_levels::get();
         $menu = $this->menu;
-        return view('pages.admin.spp.index', compact('menu', 'datas'));
+        return view('pages.admin.indikator_level.index', compact('menu', 'datas'));
     }
 
     /**
@@ -25,7 +25,7 @@ class SppController extends Controller
     public function create()
     {
         $menu = $this->menu;
-        return view('pages.admin.spp.create', compact('menu'));
+        return view('pages.admin.indikator_level.create', compact('menu'));
     }
 
     /**
@@ -38,9 +38,9 @@ class SppController extends Controller
         // dd($r);
 
         // Menyimpan data guru
-        SppPlan::create($r);
+        Indicator_levels::create($r);
 
-        return redirect()->route('spp.index')->with('message', 'Data guru berhasil ditambahkan.');
+        return redirect()->route('indikator_level.index')->with('message', 'Data guru berhasil ditambahkan.');
     }
 
 
@@ -49,10 +49,10 @@ class SppController extends Controller
      */
     public function edit($id)
     {
-        $data = SppPlan::findOrFail($id);
+        $data = Indicator_levels::findOrFail($id);
         $menu = $this->menu;
 
-        return view('pages.admin.spp.edit', compact('data', 'menu'));
+        return view('pages.admin.indikator_level.edit', compact('data', 'menu'));
     }
 
     /**
@@ -61,12 +61,12 @@ class SppController extends Controller
     public function update(Request $request)
     {
         $r = $request->all();
-        $data = SppPlan::find($r['id']);
+        $data = Indicator_levels::find($r['id']);
 
         // dd($r);
         $data->update($r);
 
-        return redirect()->route('spp.index')->with('message', 'Data guru berhasil diperbarui.');
+        return redirect()->route('indikator_level.index')->with('message', 'Data guru berhasil diperbarui.');
     }
 
 
@@ -75,10 +75,10 @@ class SppController extends Controller
      */
     public function destroy($id)
     {
-        $data = SppPlan::find($id);
+        $data = Indicator_levels::find($id);
         $data->delete();
 
-        return redirect()->route('spp.index')->with('message', 'Data guru berhasil dihapus.');
+        return redirect()->route('indikator_level.index')->with('message', 'Data guru berhasil dihapus.');
     }
 
 }

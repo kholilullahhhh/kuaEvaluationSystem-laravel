@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Data SPP'])
+@extends('layouts.app', ['title' => 'Data Indikator Level'])
 
 @section('content')
     @push('styles')
@@ -9,7 +9,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data SPP</h1>
+                <h1>Data Indikator Level</h1>
             </div>
 
             <div class="section-body">
@@ -17,7 +17,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <a href="{{ route('spp.create') }}" class="btn btn-primary my-4">
+                                <a href="{{ route('indikator_level.create') }}" class="btn btn-primary my-4">
                                     <i class="fas fa-plus"></i> Tambah Data SPP
                                 </a>
                                 <div class="table-responsive">
@@ -40,11 +40,11 @@
                                                     <td>Rp {{ number_format($spp->nominal, 0, ',', '.') }}</td>
                                                     <td>
                                                         <div class="action-buttons">
-                                                            <a href="{{ route('spp.edit', $spp->id) }}"
+                                                            <a href="{{ route('indikator_level.edit', $spp->id) }}"
                                                                 class="btn btn-warning btn-action">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
-                                                            <form action="{{ route('spp.hapus', $spp->id) }}" method="POST"
+                                                            <form action="{{ route('indikator_level.hapus', $spp->id) }}" method="POST"
                                                                 class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
