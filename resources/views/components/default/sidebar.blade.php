@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{route('dashboard') }}">SMK TRIDHARMA MAROS</a>
+            <a href="{{route('dashboard') }}">KUA PALLANGGA</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{route('dashboard') }}">SMK TRIDHARMA MAROS</a>
+            <a href="{{route('dashboard') }}">KUA PALLANGGA</a>
         </div>
 
         <ul class="sidebar-menu">
@@ -17,7 +17,7 @@
             </li>
 
             @if (session('role') == 'admin')
-                <li class="nav-item dropdown {{ $menu == 'pegawai' ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ $menu == 'pegawai' || $menu == 'agenda' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-sitemap"></i>
                         <span>Master Data</span></a>
                     <ul class="dropdown-menu">
@@ -27,11 +27,16 @@
                                 Data Pegawai
                             </a>
                         </li>
+                        <li class="{{ $menu == 'agenda' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('agenda.index') }}">
+                                Data Agenda
+                            </a>
+                        </li>
 
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown {{ $menu == 'indikator' || 'indikator_level' ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ $menu == 'indikator' || $menu == 'indikator_level' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-sitemap"></i>
                         <span>Data Indikator</span></a>
                     <ul class="dropdown-menu">
@@ -50,9 +55,9 @@
                     </ul>
                 </li>
 
-                <li class="{{ $menu == 'agenda' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('agenda.index') }}">
-                        <i class="fas fa-wallet"></i> <span>Data Agenda</span>
+                <li class="{{ $menu == 'absensi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('absensi.index') }}">
+                        <i class="fas fa-wallet"></i> <span>Data Absensi</span>
                     </a>
                 </li>
 

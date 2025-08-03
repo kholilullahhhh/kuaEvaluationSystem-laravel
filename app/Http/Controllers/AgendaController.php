@@ -35,26 +35,6 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         $r = $request->all();
-
-        $file = $request->file('thumbnail');
-
-        // dd($file->getSize() / 1024);
-        // if ($file->getSize() / 1024 >= 512) {
-        //     return redirect()->route('agenda.create')->with('message', 'size gambar');
-        // }
-
-        $foto = $request->file('thumbnail');
-        $ext = $foto->getClientOriginalExtension();
-        // $r['pas_foto'] = $request->file('pas_foto');
-
-        $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
-        $destinationPath = public_path('upload/agenda');
-
-        $foto->move($destinationPath, $nameFoto);
-
-        $fileUrl = asset('upload/agenda/' . $nameFoto);
-        // dd($destinationPath);
-        $r['thumbnail'] = $nameFoto;
         $r['tempat_kegiatan'] = $r['lokasi_kegiatan'];
         // dd($r);
         Agenda::create($r);
@@ -89,26 +69,6 @@ class AgendaController extends Controller
     {
         $r = $request->all();
         $data = Agenda::find($r['id']);
-
-        $foto = $request->file('thumbnail');
-
-
-
-        if ($request->hasFile('thumbnail')) {
-            if ($foto->getSize() / 1024 >= 512) {
-                return redirect()->route('agenda.edit', $r['id'])->with('message', 'size gambar');
-            }
-            $ext = $foto->getClientOriginalExtension();
-            $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
-            $destinationPath = public_path('upload/agenda');
-
-            $foto->move($destinationPath, $nameFoto);
-
-            $fileUrl = asset('upload/agenda/' . $nameFoto);
-            $r['thumbnail'] = $nameFoto;
-        } else {
-            $r['thumbnail'] = $request->thumbnail_old;
-        }
 
         $r['nama_kegiatan'] = $r['judul'];
         $r['tempat_kegiatan'] = $r['lokasi_kegiatan'];

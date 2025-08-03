@@ -14,7 +14,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Agenda RPPH</h1>
+                <h1>Data Agenda Rapat</h1>
             </div>
 
             <div class="section-body">
@@ -35,13 +35,11 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th>Thumbnail</th>
                                                 <th>Judul Agenda</th>
                                                 {{-- <th>Isi Agenda</th> --}}
-                                                <th>Lokasi Agenda</th>
+                                                <th>Ruangan</th>
                                                 <th>Tanggal Agenda</th>
                                                 <th>Jam Agenda</th>
-                                                <th>Author</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -56,16 +54,10 @@
                                                 ?>
                                                 <tr>
                                                     <td>{{ ++$i }}</td>
-                                                    <td>
-                                                        <img class="img img-fluid" width="100"
-                                                            src="{{ asset('upload/agenda/' . $data->thumbnail) }}"
-                                                            alt="Thumbnail Agenda">
-                                                    </td>
                                                     <td>{{ $data->judul ?? '' }}</td>
                                                     {{-- <td>{!! $data->isi ?? '' !!}</td> --}}
                                                     <td>{{ $data->tempat_kegiatan }} </td>
                                                     <td>{{ $data->tgl_kegiatan }} - {{ $data->tgl_selesai }} </td>
-                                                    <td>{{ $data->jam_mulai }} - {{ $data->jam_selesai }} WITA </td>
                                                     <td>{{ $data->status }} </td>
                                                     <td>
                                                         @if ($data->status == 'publish')

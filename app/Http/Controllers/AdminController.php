@@ -36,20 +36,6 @@ class AdminController extends Controller
             $monthlyPayments[$month] = $total;
         }
 
-        // Get class progress data
-        // $classProgress = Classes::withCount([
-        //     'students',
-        //     'payment' => function ($query) use ($selectedYear) {
-        //         $query->where('status', 'paid')
-        //             ->whereYear('paid_at', $selectedYear); // Filter payments for the selected year
-        //     }
-        // ])->get()->map(function ($class) {
-        //     $class->paid_count = $class->payments_count; // Count of paid students
-        //     $class->total_students = $class->students_count; // Total number of students
-        //     $class->percentage = $class->total_students > 0 ?
-        //         ($class->paid_count / $class->total_students) * 100 : 0; // Calculate percentage
-        //     return $class;
-        // });
 
         return view('pages.admin.dashboard.index', [
             'menu' => 'dashboard',

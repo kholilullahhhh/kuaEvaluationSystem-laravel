@@ -11,7 +11,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Ubah Agenda</h1>
+                <h1>Ubah Agenda Rapat</h1>
             </div>
 
             <div class="section-body">
@@ -40,7 +40,7 @@
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Lokasi
                                             Agenda</label>
                                         <div class="col-sm-6 col-md-4">
-                                            <input required type="text"  class="form-control"
+                                            <input required type="text" class="form-control"
                                                 value="{{ $data->tempat_kegiatan }}" name="lokasi_kegiatan">
                                         </div>
                                     </div>
@@ -59,30 +59,10 @@
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Isi
                                             Agenda</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <textarea required name="deskripsi_kegiatan"  class="summernote">{!! $data->deskripsi_kegiatan !!}</textarea>
+                                            <textarea required name="deskripsi_kegiatan"
+                                                class="summernote">{!! $data->deskripsi_kegiatan !!}</textarea>
                                         </div>
                                     </div>
-
-
-                                    <div class="form-group row mb-4">
-                                        <label
-                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Thumbnail</label>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div id="image-preview" class="image-preview">
-                                                <label for="image-upload" id="image-label">Choose File</label>
-                                                <input type="file" name="thumbnail" id="image-upload" />
-                                            </div>
-                                            <!-- <input type="hidden" name="thumbnail_old" value="{{ $data->thumbnail }}"
-                                                id="" /> -->
-                                        </div>
-                                        <div class="col-sm-6 col-md-4 mt-3">
-
-                                            <img class="img img-fluid" width="250"
-                                                src="{{ asset('upload/agenda/' . $data->thumbnail) }}" alt="">
-                                        </div>
-                                    </div>
-
-
 
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal
@@ -90,10 +70,6 @@
                                         <div class="col-sm-6 col-md-4 mb-4">
                                             <input value="{{ $data->tgl_kegiatan }}" required type="date" value=""
                                                 class="form-control" name="tgl_kegiatan">
-                                        </div>
-                                        <div class="col-sm-6 col-md-4 ">
-                                            <input value="{{ $data->tgl_selesai }}" required type="date" value=""
-                                                class="form-control" name="tgl_selesai">
                                         </div>
                                     </div>
 
@@ -104,40 +80,18 @@
                                             <input value="{{ $data->jam_mulai }}" required type="time" value=""
                                                 class="form-control" name="jam_mulai">
                                         </div>
-                                        <div class="col-sm-6 col-md-4 ">
-                                            <input value="{{ $data->jam_selesai }}" required type="time" value=""
-                                                class="form-control" name="jam_selesai">
-                                        </div>
+
                                     </div>
 
-                                    <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Author</label>
-                                        <div class="col-sm-6 col-md-4">
-                                            <input readonly type="text" value="{{ session('name') }}"
-                                                class="form-control" name="author">
-                                        </div>
-                                    </div>
-
-                                    <div class="row form-group mb-4">
-
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal
-                                            Publish</label>
-                                        <div class="col-sm-6 col-md-4">
-                                            <input readonly class="form-control"
-                                                value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" type="date"
-                                                name="tgl_publish" />
-
-                                        </div>
-                                    </div>
 
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
                                         <div class="col-sm-6 col-md-4">
                                             <select class="form-control selectric" name="status" required>
-                                                <option {{ $data->status == 'publish' ? 'selected' : '' }}
-                                                    value="publish">Publish</option>
-                                                <option {{ $data->status == 'pending' ? 'selected' : '' }}
-                                                    value="pending">Pending</option>
+                                                <option {{ $data->status == 'publish' ? 'selected' : '' }} value="publish">
+                                                    Publish</option>
+                                                <option {{ $data->status == 'pending' ? 'selected' : '' }} value="pending">
+                                                    Pending</option>
                                             </select>
                                         </div>
                                     </div>

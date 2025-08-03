@@ -11,7 +11,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Agenda</h1>
+                <h1>Tambah Agenda Rapat</h1>
             </div>
 
             <div class="section-body">
@@ -35,7 +35,7 @@
                                     </div>
                                     
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Lokasi Agenda</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Ruangan Agenda</label>
                                         <div class="col-sm-6 col-md-4">
                                             <input required type="text" value=""
                                                 class="form-control" name="lokasi_kegiatan">
@@ -60,29 +60,11 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="form-group row mb-4">
-                                        <label
-                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Thumbnail</label>
-                                        <div class="col-sm-12 col-md-7">
-                                            <div id="image-preview" class="image-preview">
-                                                <label for="image-upload" id="image-label">Choose File</label>
-                                                <input required type="file" name="thumbnail" id="image-upload" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal Agenda</label>
                                         <div class="col-sm-6 col-md-4 mb-4">
                                             <input required  type="date" value=""
                                                 class="form-control" name="tgl_kegiatan">
-                                        </div>
-                                        <div class="col-sm-6 col-md-4 ">
-                                            <input required  type="date" value=""
-                                                class="form-control" name="tgl_selesai">
                                         </div>
                                     </div>
 
@@ -92,32 +74,11 @@
                                             <input required  type="time" value=""
                                                 class="form-control" name="jam_mulai">
                                         </div>
-                                        <div class="col-sm-6 col-md-4 ">
-                                            <input required  type="time" value=""
-                                                class="form-control" name="jam_selesai">
-                                        </div>
                                     </div>
 
-                                    <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Author</label>
-                                        <div class="col-sm-6 col-md-4">
-                                            <input readonly type="text" value="{{ session('name') }}"
-                                                class="form-control" name="author">
-                                        </div>
-                                    </div>
 
                                     <div class="row form-group mb-4">
-
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tanggal
-                                            Publish</label>
-                                        <div class="col-sm-6 col-md-4">
-                                            <input readonly class="form-control"
-                                                value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" type="date"
-                                                name="tgl_publish" />
-
-                                        </div>
                                     </div>
-
                                     <div class="form-group row mb-4">
 
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
