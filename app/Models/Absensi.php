@@ -11,6 +11,7 @@ class Absensi extends Model
     protected $fillable = [
         'agenda_id',
         'user_id',
+        'dokumentasi', // foto bukti dokumentasi kegiatan 
         'status',
         'keterangan', // Optional field for additional notes
     ];

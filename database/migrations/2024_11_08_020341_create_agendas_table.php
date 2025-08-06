@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->date('tgl_kegiatan');
             $table->time('jam_mulai');
             $table->text('deskripsi_kegiatan'); //deskripsi rapat
+            $table->string('kategori'); // kategori kegiatan | agenda
             $table->string('status');
             $table->timestamps();
         });
