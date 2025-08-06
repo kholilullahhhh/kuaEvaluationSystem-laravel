@@ -1,27 +1,30 @@
-@extends('layouts.app', ['title' => 'Data SPP'])
+@extends('layouts.app', ['title' => 'Tambah Data Indikator Level'])
+
 @section('content')
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.css') }}">
         <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
-        <link rel="stylesheet" href="{{ asset('library/bootstrap-daterangepicker/daterangepicker.css') }}">
-        <link rel="stylesheet" href="{{ asset('library/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
     @endpush
 
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Data SPP</h1>
+                <h1>Tambah Data Indikator Level</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('indikator_level.index') }}">Indikator Level</a></div>
+                    <div class="breadcrumb-item">Tambah Data</div>
+                </div>
             </div>
 
             <div class="section-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-8 offset-lg-2">
-                        <form action="{{ route('spp.store') }}" method="POST">
+                        <form action="{{ route('indikator_level.store') }}" method="POST">
                             @csrf
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Form Tambah SPP</h4>
+                                    <h4>Form Tambah Indikator Level</h4>
                                 </div>
                                 <div class="card-body">
                                     @if ($errors->any())
@@ -35,32 +38,39 @@
                                     @endif
 
                                     <div class="form-group">
-                                        <label>Tahun</label>
-                                        <input type="number" name="year" class="form-control" required
-                                            placeholder="Misal: 2025" value="{{ old('year') }}">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Semester</label>
-                                        <select name="semester" class="form-control selectric" required>
-                                            <option value="">-- Pilih Semester --</option>
-                                            <option value="ganjil" {{ old('semester') == 'ganjil' ? 'selected' : '' }}>Ganjil
-                                            </option>
-                                            <option value="genap" {{ old('semester') == 'genap' ? 'selected' : '' }}>Genap
-                                            </option>
+                                        <label>Indikator</label>
+                                        <select name="indicator_id" class="form-control select2" required>
+                                            <option value="">-- Pilih Indikator --</option>
+                                            @foreach($indicators as $indicator)
+                                                <option value="{{ $indicator->id }}" {{ old('indicator_id') == $indicator->id ? 'selected' : '' }}>
+                                                    {{ $indicator->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Nominal SPP</label>
-                                        <input type="number" name="nominal" class="form-control" required
-                                            placeholder="Masukkan jumlah nominal SPP" value="{{ old('nominal') }}">
+                                        <label>Score (1-4)</label>
+                                        <select name="score" class="form-control selectric" required>
+                                            <option value="">-- Pilih Score --</option>
+                                            @for($i = 1; $i <= 4; $i++)
+                                                <option value="{{ $i }}" {{ old('score') == $i ? 'selected' : '' }}>
+                                                    Level {{ $i }}
+                                                </option>
+                                            @endfor
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Deskripsi Perilaku</label>
+                                        <textarea name="behavior_description" class="form-control" rows="4" required
+                                            placeholder="Masukkan deskripsi perilaku untuk level ini">{{ old('behavior_description') }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="card-footer text-right">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <a href="{{ route('spp.index') }}" class="btn btn-warning">Kembali</a>
+                                    <a href="{{ route('indikator_level.index') }}" class="btn btn-warning ml-2">Kembali</a>
                                 </div>
                             </div>
                         </form>
@@ -72,10 +82,12 @@
 
     @push('scripts')
         <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
-        <script src="{{ asset('library/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-        <script src="{{ asset('library/summernote/dist/summernote-bs4.js') }}"></script>
-        <script src="{{ asset('library/upload-preview/upload-preview.js') }}"></script>
         <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
-        <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+                $('.selectric').selectric();
+            });
+        </script>
     @endpush
 @endsection

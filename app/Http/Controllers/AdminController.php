@@ -58,7 +58,7 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-        $recentAssessments = Indicator_levels::with(['user', 'indikator'])
+        $recentAssessments = Indicator_levels::with(['user', 'indicator'])
             ->latest()
             ->take(5)
             ->get();

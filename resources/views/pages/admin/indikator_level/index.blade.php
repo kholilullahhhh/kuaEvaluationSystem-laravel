@@ -10,41 +10,50 @@
         <section class="section">
             <div class="section-header">
                 <h1>Data Indikator Level</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item">Indikator Level</div>
+                </div>
             </div>
 
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header">
+                                <h4>Daftar Level Indikator</h4>
+                                <div class="card-header-action">
+                                    <a href="{{ route('indikator_level.create') }}" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i> Tambah Level Indikator
+                                    </a>
+                                </div>
+                            </div>
                             <div class="card-body">
-                                <a href="{{ route('indikator_level.create') }}" class="btn btn-primary my-4">
-                                    <i class="fas fa-plus"></i> Tambah Data SPP
-                                </a>
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-spp">
+                                    <table class="table table-striped" id="table-indikator-level">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Tahun</th>
-                                                <th>Semester</th>
-                                                <th>Nominal</th>
-                                                <th>Action</th>
+                                                <th>Indikator</th>
+                                                <th>Level</th>
+                                                <th>Deskripsi Perilaku</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($datas as $index => $spp)
+                                            @foreach ($datas as $index => $level)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $spp->year }}</td>
-                                                    <td>{{ ucfirst($spp->semester) }}</td>
-                                                    <td>Rp {{ number_format($spp->nominal, 0, ',', '.') }}</td>
+                                                    <td>{{ $level->indicator->name }}</td>
+                                                    <td>Level {{ $level->score }}</td>
+                                                    <td>{{ $level->behavior_description }}</td>
                                                     <td>
                                                         <div class="action-buttons">
-                                                            <a href="{{ route('indikator_level.edit', $spp->id) }}"
+                                                            <a href="{{ route('indikator_level.edit', $level->id) }}"
                                                                 class="btn btn-warning btn-action">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
-                                                            <form action="{{ route('indikator_level.hapus', $spp->id) }}" method="POST"
+                                                            <form action="{{ route('indikator_level.hapus', $level->id) }}" method="POST"
                                                                 class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -53,7 +62,6 @@
                                                                     <i class="fas fa-trash"></i> Hapus
                                                                 </button>
                                                             </form>
-
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -80,7 +88,7 @@
 
         <script>
             $(document).ready(function () {
-                $('#table-kelas').DataTable();
+                $('#table-indikator-level').DataTable();
 
                 // SweetAlert for delete confirmation
                 $('.delete-btn').click(function (e) {
@@ -89,7 +97,7 @@
 
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
-                        text: "Data kelas ini akan dihapus secara permanen!",
+                        text: "Data level indikator ini akan dihapus secara permanen!",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -99,7 +107,7 @@
                         reverseButtons: true
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            form.submit();  // Submit the form if confirmed
+                            form.submit();
                         }
                     });
                 });
@@ -123,7 +131,7 @@
                         text: '{{ session('error') }}',
                     });
                 @endif
-                                                                                        });
+            });
         </script>
     @endpush
 @endsection

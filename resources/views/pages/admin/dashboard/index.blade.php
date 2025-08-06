@@ -418,11 +418,10 @@
                             @forelse($recentAssessments as $assessment)
                                 <div class="recent-item mb-3 p-3 border rounded">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 class="font-weight-bold mb-0">{{ $assessment->user->name }}</h6>
                                         <span class="badge badge-warning">{{ $assessment->skor_akhir }}/4</span>
                                     </div>
                                     <div class="mb-2">
-                                        <small class="text-muted">{{ $assessment->indikator->name }}</small>
+                                        <small class="text-muted">{{ $assessment->indicator->name }}</small>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <small class="text-muted">{{ $assessment->kategori }}</small>

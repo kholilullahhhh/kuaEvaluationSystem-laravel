@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('indicator_levels', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id')->nullable();
             $table->string('indicator_id');
             $table->integer('score'); // 1 sampai 4
             $table->string('behavior_description');

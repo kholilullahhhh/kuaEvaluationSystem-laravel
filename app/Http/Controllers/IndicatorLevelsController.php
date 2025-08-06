@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Indicators;
 use Illuminate\Http\Request;
 use App\Models\Indicator_levels;
 
@@ -24,8 +25,9 @@ class IndicatorLevelsController extends Controller
      */
     public function create()
     {
+        $indicators = Indicators::get();
         $menu = $this->menu;
-        return view('pages.admin.indikator_level.create', compact('menu'));
+        return view('pages.admin.indikator_level.create', compact('menu', 'indicators'));
     }
 
     /**
@@ -50,9 +52,10 @@ class IndicatorLevelsController extends Controller
     public function edit($id)
     {
         $data = Indicator_levels::findOrFail($id);
+        $indicators = Indicators::get();
         $menu = $this->menu;
 
-        return view('pages.admin.indikator_level.edit', compact('data', 'menu'));
+        return view('pages.admin.indikator_level.edit', compact('data','indicators', 'menu'));
     }
 
     /**

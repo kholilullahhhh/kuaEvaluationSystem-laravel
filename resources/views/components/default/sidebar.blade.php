@@ -74,9 +74,15 @@
 
             @if (session('role') == 'user')
 
-                <li class="{{ $menu == 'midtrans' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('midtrans.index') }}">
-                        <i class="fas fa-wallet"></i> <span>Data Transaksi</span>
+                <li class="{{ $menu == 'agenda' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('agenda.index') }}">
+                        <i class="fas fa-wallet"></i> <span>Data Agenda</span>
+                    </a>
+                </li>
+
+                <li class="{{ $menu == 'absensi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('user.absensi.index') }}">
+                        <i class="fas fa-wallet"></i> <span>Data Absensi</span>
                     </a>
                 </li>
                 <li class="menu-header">Landing Page</li>

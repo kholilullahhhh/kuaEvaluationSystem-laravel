@@ -30,7 +30,7 @@
                                                 <th class="text-center">#</th>
                                                 <th>Nama Agenda</th>
                                                 <th>Nama Pegawai</th>
-                                                <th>NUPTK</th>
+                                                <th>NIP</th>
                                                 <th>Status Kehadiran</th>
                                                 <th>Keterangan</th>
                                                 <th>Tanggal Absensi</th>
@@ -43,7 +43,7 @@
                                                     <td>{{ ++$i }}</td>
                                                     <td>{{ $data->agenda->judul ?? 'N/A' }}</td>
                                                     <td>{{ $data->user->name ?? 'N/A' }}</td>
-                                                    <td>{{ $data->user->nuptk ?? 'N/A' }}</td>
+                                                    <td>{{ $data->user->nip ?? 'N/A' }}</td>
                                                     <td>
                                                         @switch($data->status)
                                                             @case('hadir')

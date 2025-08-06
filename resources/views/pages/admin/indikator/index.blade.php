@@ -10,6 +10,10 @@
         <section class="section">
             <div class="section-header">
                 <h1>Data Indikator</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
+                    <div class="breadcrumb-item">Data Indikator</div>
+                </div>
             </div>
 
             <div class="section-body">
@@ -20,34 +24,34 @@
                                 <h4 class="mb-0">Daftar Indikator</h4>
                                 <div class="card-header-action">
                                     <a href="{{ route('indikator.create') }}" class="btn btn-primary">
-                                        <i class="bi bi-plus-lg"></i> Tambah Kelas
+                                        <i class="fas fa-plus"></i> Tambah Indikator
                                     </a>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-kelas">
+                                    <table class="table table-striped" id="table-indikator">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nama Kelas</th>
-                                                <th>Jurusan</th>
+                                                <th>Nama Indikator</th>
+                                                <th>Deskripsi</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($datas as $index => $kelas)
+                                            @foreach ($datas as $index => $indicator)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $kelas->name }}</td>
-                                                    <td>{{ $kelas->jurusan }}</td>
+                                                    <td>{{ $indicator->name }}</td>
+                                                    <td>{{ $indicator->description ?? '-' }}</td>
                                                     <td>
                                                         <div class="action-buttons">
-                                                            <a href="{{ route('indikator.edit', $kelas->id) }}"
+                                                            <a href="{{ route('indikator.edit', $indicator->id) }}"
                                                                 class="btn btn-warning btn-action">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
-                                                            <form action="{{ route('indikator.hapus', $kelas->id) }}" method="POST"
+                                                            <form action="{{ route('indikator.hapus', $indicator->id) }}" method="POST"
                                                                 class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
@@ -56,7 +60,6 @@
                                                                     <i class="fas fa-trash"></i> Hapus
                                                                 </button>
                                                             </form>
-
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -83,7 +86,7 @@
 
         <script>
             $(document).ready(function () {
-                $('#table-kelas').DataTable();
+                $('#table-indikator').DataTable();
 
                 // SweetAlert for delete confirmation
                 $('.delete-btn').click(function (e) {
@@ -92,7 +95,7 @@
 
                     Swal.fire({
                         title: 'Apakah Anda yakin?',
-                        text: "Data kelas ini akan dihapus secara permanen!",
+                        text: "Data indikator ini akan dihapus secara permanen!",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -102,7 +105,7 @@
                         reverseButtons: true
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            form.submit();  // Submit the form if confirmed
+                            form.submit();
                         }
                     });
                 });
@@ -126,7 +129,7 @@
                         text: '{{ session('error') }}',
                     });
                 @endif
-                                                                });
+            });
         </script>
     @endpush
 @endsection

@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\MidtransController;
-use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\AbsenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -237,14 +236,12 @@ Route::group(
                 Route::delete('/hapus/{id}', 'MidtransController@destroy')->name('midtrans.hapus');
             });
 
-            //payment midtrans siswa
-            Route::prefix('payment_midtrans')->group(function () {
-                Route::get('/', [MidtransController::class, 'index'])->name('midtrans.index');
-                Route::get('/create/{id}', [MidtransController::class, 'create'])->name('midtrans.create');
-                // Route store dihapus karena tidak diperlukan lagi
-                Route::get('/callback', [MidtransController::class, 'callback'])->name('midtrans.callback');
-                Route::post('/notification', [MidtransController::class, 'notificationHandler'])->name('midtrans.notification');
+            Route::prefix('user')->group(function () {
+                Route::get('/', [AbsenController::class, 'userIndex'])->name('user.absensi.index');
+                Route::get('/create', [AbsenController::class, 'userCreate'])->name('user.absensi.create');
+                Route::post('/store', [AbsenController::class, 'userStore'])->name('user.absensi.store');
             });
+
 
         });
     }
