@@ -32,11 +32,40 @@ class AbsensiController extends Controller
         $users = User::where('role', 'user')->get();
         return view('pages.admin.absensi.create', compact('users', 'agendas', 'menu'));
     }
+    // public function store(Request $request)
+    // {
+    //     $r = $request->all();
+    //     Absensi::create($r);
+    //     return redirect()->route('absensi.index')->with('message', 'store');
+    // }
     public function store(Request $request)
     {
         $r = $request->all();
+
+        $file = $request->file('dokumentasi');
+
+        // dd($file->getSize() / 1024);
+        // if ($file->getSize() / 1024 >= 512) {
+        //     return redirect()->route('dokumentasi.create')->with('message', 'size gambar');
+        // }
+
+        $foto = $request->file('dokumentasi');
+        $ext = $foto->getClientOriginalExtension();
+        // $r['pas_foto'] = $request->file('pas_foto');
+
+        $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
+        $destinationPath = public_path('upload/dokumentasi');
+
+        $foto->move($destinationPath, $nameFoto);
+
+        $fileUrl = asset('upload/dokumentasi/' . $nameFoto);
+        // dd($destinationPath);
+        $r['dokumentasi'] = $nameFoto;
+        // dd($r);
         Absensi::create($r);
+
         return redirect()->route('absensi.index')->with('message', 'store');
+
     }
     public function edit($id)
     {

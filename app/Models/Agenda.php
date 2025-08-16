@@ -15,7 +15,6 @@ class Agenda extends Model
         'tgl_kegiatan',
         'jam_mulai',
         'deskripsi_kegiatan',
-        'kategori',
         'status', //aktif tidaknya kegitan itu
     ];
 

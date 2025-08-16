@@ -16,76 +16,139 @@
             <div class="section-header">
                 <h1>Data Agenda Rapat</h1>
             </div>
+            @if (session('role') == 'admin')
 
-            <div class="section-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Navigation Buttons -->
 
-                                <a href="{{ route('agenda.create') }}" class="btn btn-primary text-white my-3">+ Tambah
-                                    Agenda</a>
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- Navigation Buttons -->
 
-                                <!-- Tables Section -->
-                                <!-- PPNPN -->
-                                <div class="table-responsive ">
-                                    <!-- Table PPNPN -->
-                                    <table class="table table-striped " id="table-agenda">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">#</th>
-                                                <th>Judul Agenda</th>
-                                                {{-- <th>Isi Agenda</th> --}}
-                                                <th>Ruangan</th>
-                                                <th>Tanggal Agenda</th>
-                                                <th>Jam Agenda</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($datas as $i => $data)
-                                                <?php
-                                                setlocale(LC_ALL, 'IND');
-                                                
-                                                $tgl_kegiatan = strftime('%d %B', strtotime($data->tgl_kegiatan));
-                                                $tgl_selesai = strftime('%d %B %Y', strtotime($data->tgl_selesai));
-                                                ?>
+                                    <a href="{{ route('agenda.create') }}" class="btn btn-primary text-white my-3">+ Tambah
+                                        Agenda</a>
+
+                                    <!-- Tables Section -->
+                                    <!-- PPNPN -->
+                                    <div class="table-responsive ">
+                                        <!-- Table PPNPN -->
+                                        <table class="table table-striped " id="table-agenda">
+                                            <thead>
                                                 <tr>
-                                                    <td>{{ ++$i }}</td>
-                                                    <td>{{ $data->judul ?? '' }}</td>
-                                                    {{-- <td>{!! $data->isi ?? '' !!}</td> --}}
-                                                    <td>{{ $data->tempat_kegiatan }} </td>
-                                                    <td>{{ $data->tgl_kegiatan }} - {{ $data->tgl_selesai }} </td>
-                                                    <td>{{ $data->status }} </td>
-                                                    <td>
-                                                        @if ($data->status == 'publish')
-                                                            <span class="badge badge-success">Publish</span>
-                                                        @else
-                                                            <span class="badge badge-warning">Belum Publish</span>
-                                                        @endif
-
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('agenda.edit', $data->id) }}"
-                                                            class="btn btn-warning my-2"><i class="fas fa-edit"></i></a>
-                                                        <button onclick="deleteData({{ $data->id }}, 'agenda')"
-                                                            class="btn btn-danger">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </td>
+                                                    <th class="text-center">#</th>
+                                                    <th>Judul Agenda</th>
+                                                    {{-- <th>Isi Agenda</th> --}}
+                                                    <th>Ruangan</th>
+                                                    <th>Tanggal Agenda</th>
+                                                    <th>Jam Agenda</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($datas as $i => $data)
+                                                                                    <?php
+                                                    setlocale(LC_ALL, 'IND');
 
+                                                    $tgl_kegiatan = strftime('%d %B', strtotime($data->tgl_kegiatan));
+                                                    $tgl_selesai = strftime('%d %B %Y', strtotime($data->tgl_selesai));
+                                                                                                                                                                                                                                                                            ?>
+                                                                                    <tr>
+                                                                                        <td>{{ ++$i }}</td>
+                                                                                        <td>{{ $data->judul ?? '' }}</td>
+                                                                                        {{-- <td>{!! $data->isi ?? '' !!}</td> --}}
+                                                                                        <td>{{ $data->tempat_kegiatan }} </td>
+                                                                                        <td>{{ $data->tgl_kegiatan }} - {{ $data->tgl_selesai }} </td>
+                                                                                        <td>{{ $data->status }} </td>
+                                                                                        <td>
+                                                                                            @if ($data->status == 'publish')
+                                                                                                <span class="badge badge-success">Publish</span>
+                                                                                            @else
+                                                                                                <span class="badge badge-warning">Belum Publish</span>
+                                                                                            @endif
+
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <a href="{{ route('agenda.edit', $data->id) }}"
+                                                                                                class="btn btn-warning my-2"><i class="fas fa-edit"></i></a>
+                                                                                            <button onclick="deleteData({{ $data->id }}, 'agenda')"
+                                                                                                class="btn btn-danger">
+                                                                                                <i class="fas fa-trash-alt"></i>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- Navigation Buttons -->
+
+                                    <!-- Tables Section -->
+                                    <!-- PPNPN -->
+                                    <div class="table-responsive ">
+                                        <!-- Table PPNPN -->
+                                        <table class="table table-striped " id="table-agenda">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th>Judul Agenda</th>
+                                                    {{-- <th>Isi Agenda</th> --}}
+                                                    <th>Ruangan</th>
+                                                    <th>Tanggal Agenda</th>
+                                                    <th>Jam Agenda</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($agendaUser as $i => $data)
+                                                                                    <?php
+                                                    setlocale(LC_ALL, 'IND');
+
+                                                    $tgl_kegiatan = strftime('%d %B', strtotime($data->tgl_kegiatan));
+                                                    $tgl_selesai = strftime('%d %B %Y', strtotime($data->tgl_selesai));
+                                                                                                                                                                                                                                                                            ?>
+                                                                                    <tr>
+                                                                                        <td>{{ ++$i }}</td>
+                                                                                        <td>{{ $data->judul ?? '' }}</td>
+                                                                                        {{-- <td>{!! $data->isi ?? '' !!}</td> --}}
+                                                                                        <td>{{ $data->tempat_kegiatan }} </td>
+                                                                                        <td>{{ $data->tgl_kegiatan }} - {{ $data->tgl_selesai }} </td>
+                                                                                        <td>{{ $data->status }} </td>
+                                                                                        <td>
+                                                                                            @if ($data->status == 'publish')
+                                                                                                <span class="badge badge-success">Publish</span>
+                                                                                            @else
+                                                                                                <span class="badge badge-warning">Belum Publish</span>
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+
+
         </section>
     </div>
 
@@ -97,7 +160,7 @@
         <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 // Existing DataTable initialization
                 var language = {
                     "sSearch": "Pencarian Data Kegiatan RPPH : ",

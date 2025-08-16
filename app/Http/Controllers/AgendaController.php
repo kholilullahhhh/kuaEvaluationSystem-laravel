@@ -15,9 +15,13 @@ class AgendaController extends Controller
      */
     public function index()
     {
+        // agenda user
+        $userId = auth()->id();
+        $agendaUser = Agenda::where('user_id', $userId)->get();
+
         $datas = Agenda::get();
         $menu = $this->menu;
-        return view('pages.admin.agenda.index', compact('menu', 'datas'));
+        return view('pages.admin.agenda.index', compact('menu', 'datas', 'agendaUser'));
     }
 
     /**
