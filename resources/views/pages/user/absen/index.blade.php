@@ -61,10 +61,14 @@
                                                     <td>{{ $absensi->keterangan ?? '-' }}</td>
                                                     <td>{{ $absensi->created_at->format('d M Y H:i') }}</td>
                                                     <td>
-                                                    <img class="img img-fluid" width="100"
-                                                        src="{{ asset('upload/dokumentasi/' . $data->dokumentasi) }}"
-                                                        alt="Dokumentasi">
-                                                </td>
+                                                        @if($absensi->dokumentasi)
+                                                            <img class="img img-fluid" width="100"
+                                                                 src="{{ asset('upload/dokumentasi/' . $absensi->dokumentasi) }}"
+                                                                 alt="Dokumentasi">
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

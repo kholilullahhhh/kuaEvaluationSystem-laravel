@@ -68,10 +68,14 @@
                                                     </td>
                                                     <td>{{ $data->keterangan ?? '-' }}</td>
                                                     <td>{{ $data->created_at->format('d F Y H:i') }}</td>
-                                                        <td>
-                                                        <img class="img img-fluid" width="100"
-                                                            src="{{ asset('upload/dokumentasi/' . $data->dokumentasi) }}"
-                                                            alt="Dokumentasi">
+                                                    <td>
+                                                        @if($absensi->dokumentasi)
+                                                            <img class="img img-fluid" width="100"
+                                                                src="{{ asset('upload/dokumentasi/' . $absensi->dokumentasi) }}"
+                                                                alt="Dokumentasi">
+                                                        @else
+                                                            -
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <a href="{{ route('absensi.edit', $data->id) }}"

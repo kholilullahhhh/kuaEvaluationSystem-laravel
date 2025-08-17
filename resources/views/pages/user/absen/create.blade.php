@@ -19,7 +19,8 @@
                                 <h4>Form Absensi Rapat</h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('user.absensi.store') }}" method="POST">
+                                <form action="{{ route('user.absensi.store') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="form-group row mb-4">
@@ -76,7 +77,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group row mb-4">
                                         <label
                                             class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Dokumentasi</label>
