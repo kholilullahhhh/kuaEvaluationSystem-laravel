@@ -28,6 +28,7 @@
                                                 <th>Agenda Rapat</th>
                                                 <th>Status Kehadiran</th>
                                                 <th>Keterangan</th>
+                                                <th>Dokumentasi</th>
                                                 <th>Tanggal</th>
                                             </tr>
                                         </thead>
@@ -59,6 +60,11 @@
                                                     </td>
                                                     <td>{{ $absensi->keterangan ?? '-' }}</td>
                                                     <td>{{ $absensi->created_at->format('d M Y H:i') }}</td>
+                                                    <td>
+                                                    <img class="img img-fluid" width="100"
+                                                        src="{{ asset('upload/dokumentasi/' . $data->dokumentasi) }}"
+                                                        alt="Dokumentasi">
+                                                </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

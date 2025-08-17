@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Indicator_levels;
+use App\Models\performance_scores;
 use App\Models\Payment;
 use App\Models\Agenda;
 use Illuminate\Http\Request;
@@ -45,8 +45,8 @@ class AdminController extends Controller
         $terlambatCount = Absensi::where('status', 'terlambat')->count();
 
         // Performance assessment statistics
-        $totalAssessments = Indicator_levels::count();
-        $averageScore = Indicator_levels::avg('score') ?? 0;
+        $totalAssessments = performance_scores::count();
+        $averageScore = performance_scores::avg('total_skor') ?? 0;
 
         // Recent data
         $recentAgendas = Agenda::orderBy('tgl_kegiatan', 'desc')
@@ -58,7 +58,7 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-        $recentAssessments = Indicator_levels::with(['user', 'indicator'])
+        $recentAssessments = performance_scores::with(['user', 'indicator'])
             ->latest()
             ->take(5)
             ->get();

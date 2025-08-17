@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Indicators;
 use Illuminate\Http\Request;
-use App\Models\Indicator_levels;
+use App\Models\performance_scores;
+use App\Models\user;
 
-class IndicatorLevelsController extends Controller
+class PerformanceScoreController extends Controller
 {
     private $menu = 'indikator_level';
 
@@ -15,7 +16,7 @@ class IndicatorLevelsController extends Controller
      */
     public function index()
     {
-        $datas = Indicator_levels::get();
+        $datas = performance_scores::get();
         $menu = $this->menu;
         return view('pages.admin.indikator_level.index', compact('menu', 'datas'));
     }
@@ -26,8 +27,9 @@ class IndicatorLevelsController extends Controller
     public function create()
     {
         $indicators = Indicators::get();
+        $users = User::get();
         $menu = $this->menu;
-        return view('pages.admin.indikator_level.create', compact('menu', 'indicators'));
+        return view('pages.admin.indikator_level.create', compact('menu', 'indicators', 'users'));
     }
 
     /**
@@ -40,7 +42,7 @@ class IndicatorLevelsController extends Controller
         // dd($r);
 
         // Menyimpan data guru
-        Indicator_levels::create($r);
+        performance_scores::create($r);
 
         return redirect()->route('indikator_level.index')->with('message', 'Data guru berhasil ditambahkan.');
     }
@@ -51,11 +53,11 @@ class IndicatorLevelsController extends Controller
      */
     public function edit($id)
     {
-        $data = Indicator_levels::findOrFail($id);
+        $data = performance_scores::findOrFail($id);
         $indicators = Indicators::get();
         $menu = $this->menu;
 
-        return view('pages.admin.indikator_level.edit', compact('data','indicators', 'menu'));
+        return view('pages.admin.indikator_level.edit', compact('data', 'indicators', 'menu'));
     }
 
     /**
@@ -64,7 +66,7 @@ class IndicatorLevelsController extends Controller
     public function update(Request $request)
     {
         $r = $request->all();
-        $data = Indicator_levels::find($r['id']);
+        $data = performance_scores::find($r['id']);
 
         // dd($r);
         $data->update($r);
@@ -78,7 +80,7 @@ class IndicatorLevelsController extends Controller
      */
     public function destroy($id)
     {
-        $data = Indicator_levels::find($id);
+        $data = performance_scores::find($id);
         $data->delete();
 
         return redirect()->route('indikator_level.index')->with('message', 'Data guru berhasil dihapus.');

@@ -34,6 +34,7 @@
                                                 <th>Status Kehadiran</th>
                                                 <th>Keterangan</th>
                                                 <th>Tanggal Absensi</th>
+                                                <th>Dokumentasi</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -67,6 +68,11 @@
                                                     </td>
                                                     <td>{{ $data->keterangan ?? '-' }}</td>
                                                     <td>{{ $data->created_at->format('d F Y H:i') }}</td>
+                                                        <td>
+                                                        <img class="img img-fluid" width="100"
+                                                            src="{{ asset('upload/dokumentasi/' . $data->dokumentasi) }}"
+                                                            alt="Dokumentasi">
+                                                    </td>
                                                     <td>
                                                         <a href="{{ route('absensi.edit', $data->id) }}"
                                                             class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>

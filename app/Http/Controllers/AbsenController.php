@@ -31,15 +31,31 @@ class AbsenController extends Controller
     {
         $user = Auth::user();
 
-        $validated = $request->validate([
-            'agenda_id' => 'required|exists:agendas,id',
-            'status' => 'required|in:hadir,tidak hadir,izin,sakit,terlambat',
-            'keterangan' => 'nullable|string'
-        ]);
+        $r = $request->all();
+        $r['user_id'] = $user->id;
 
-        $validated['user_id'] = $user->id;
+        // dd($r);
+        $file = $request->file('dokumentasi');
 
-        Absensi::create($validated);
+        // dd($file->getSize() / 1024);
+        // if ($file->getSize() / 1024 >= 512) {
+        //     return redirect()->route('modul.create')->with('message', 'size gambar');
+        // }
+
+        $foto = $request->file('dokumentasi');
+        $ext = $foto->getClientOriginalExtension();
+        // $r['pas_foto'] = $request->file('pas_foto');
+
+        $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
+        $destinationPath = public_path('upload/dokumentasi');
+
+        $foto->move($destinationPath, $nameFoto);
+
+        $fileUrl = asset('upload/dokumentasi/' . $nameFoto);
+        // dd($destinationPath);
+        $r['dokumentasi'] = $nameFoto;
+        // dd($r);
+        Absensi::create($r);
         return redirect()->route('user.absensi.index')->with('success', 'Data absensi berhasil disimpan');
     }
 }

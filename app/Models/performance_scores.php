@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Indicator_levels extends Model
+class performance_scores extends Model
 {
     use HasFactory;
     protected $fillable = [
         'user_id',
         'indicator_id',
-        'score', // 1 sampai 4
-        'behavior_description',
+        'total_skor',
+        'persentase',
+        'keterangan',
     ];
     public function indicator()
     {
@@ -23,5 +24,5 @@ class Indicator_levels extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    
+
 }

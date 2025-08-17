@@ -23,7 +23,8 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Agenda Rapat</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Agenda
+                                            Rapat</label>
                                         <div class="col-sm-12 col-md-7">
                                             <select name="agenda_id" class="form-control select2" required>
                                                 <option value="">Pilih Agenda</option>
@@ -49,7 +50,19 @@
                                     </div>
 
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status Kehadiran</label>
+                                        <label
+                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Dokumentasi</label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <div id="image-preview" class="image-preview">
+                                                <label for="image-upload" id="image-label">Pilih File</label>
+                                                <input type="file" name="dokumentasi" id="image-upload" required />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status
+                                            Kehadiran</label>
                                         <div class="col-sm-12 col-md-7">
                                             <select name="status" class="form-control" required>
                                                 <option value="">Pilih Status</option>
@@ -63,9 +76,11 @@
                                     </div>
 
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Keterangan</label>
+                                        <label
+                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Keterangan</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <textarea name="keterangan" class="form-control" placeholder="Tambahkan keterangan jika perlu"></textarea>
+                                            <textarea name="keterangan" class="form-control"
+                                                placeholder="Tambahkan keterangan jika perlu"></textarea>
                                         </div>
                                     </div>
 
@@ -88,7 +103,7 @@
     @push('scripts')
         <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.select2').select2();
             });
         </script>

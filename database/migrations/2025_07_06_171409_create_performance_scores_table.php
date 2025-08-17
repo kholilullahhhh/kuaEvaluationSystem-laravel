@@ -4,19 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('indicator_levels', function (Blueprint $table) {
+        Schema::create('performance_scores', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
             $table->string('indicator_id');
-            $table->integer('score'); // 1 sampai 4
-            $table->string('behavior_description');
+            // hasil perhitungan
+            $table->integer('total_skor');
+            $table->decimal('persentase', 5, 2); // ex: 75.00
+            $table->string('keterangan'); // Baik, Cukup, Kurang, Sempurna
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('indicator_levels');
+        Schema::dropIfExists('performance_scores');
     }
 };

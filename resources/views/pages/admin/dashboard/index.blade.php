@@ -130,7 +130,7 @@
 
             .section-header {
                 padding: 20px 0;
-                border-bottom: 1px solid rgba(0,0,0,0.05);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
                 margin-bottom: 30px;
             }
 
@@ -168,13 +168,15 @@
             </div>
 
             <!-- Summary Cards Row -->
+
             <div class="row mb-4">
                 <!-- User Statistics -->
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="dashboard-card card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="card-icon" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+                                <div class="card-icon"
+                                    style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
                                     <i class="bi bi-people"></i>
                                 </div>
                                 <div>
@@ -205,7 +207,8 @@
                     <div class="dashboard-card card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="card-icon" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                                <div class="card-icon"
+                                    style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
                                     <i class="bi bi-calendar-event"></i>
                                 </div>
                                 <div>
@@ -215,7 +218,9 @@
                             </div>
                             <div class="mt-3">
                                 <div class="progress progress-thin mb-2">
-                                    <div class="progress-bar bg-success" style="width: {{ $totalAgendas ? round(($agendasThisMonth/$totalAgendas)*100) : 0 }}%"></div>
+                                    <div class="progress-bar bg-success"
+                                        style="width: {{ $totalAgendas ? round(($agendasThisMonth / $totalAgendas) * 100) : 0 }}%">
+                                    </div>
                                 </div>
                                 <div class="d-flex justify-content-between small text-muted">
                                     <span>Agenda Bulan Ini</span>
@@ -231,7 +236,8 @@
                     <div class="dashboard-card card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="card-icon" style="background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);">
+                                <div class="card-icon"
+                                    style="background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);">
                                     <i class="bi bi-clipboard-check"></i>
                                 </div>
                                 <div>
@@ -262,7 +268,8 @@
                     <div class="dashboard-card card h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <div class="card-icon" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">
+                                <div class="card-icon"
+                                    style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">
                                     <i class="bi bi-graph-up"></i>
                                 </div>
                                 <div>
@@ -276,7 +283,7 @@
                                     <span class="text-muted small">/ 4.0</span>
                                 </div>
                                 <div class="progress progress-thin">
-                                    <div class="progress-bar bg-warning" style="width: {{ ($averageScore/4)*100 }}%"></div>
+                                    <div class="progress-bar bg-warning" style="width: {{ ($averageScore / 4) * 100 }}%"></div>
                                 </div>
                                 <div class="text-center small text-muted mt-1">Rata-rata Skor</div>
                             </div>
@@ -295,7 +302,8 @@
                             <div class="d-flex">
                                 <select id="yearSelect" class="form-control form-control-sm">
                                     @foreach(range(date('Y') - 2, date('Y')) as $year)
-                                        <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                        <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -344,11 +352,13 @@
                                 <div class="recent-item mb-3 p-3 border rounded">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <h6 class="font-weight-bold mb-0">{{ $agenda->judul }}</h6>
-                                        <small class="text-muted">{{ \Carbon\Carbon::parse($agenda->tgl_kegiatan)->format('d M') }}</small>
+                                        <small
+                                            class="text-muted">{{ \Carbon\Carbon::parse($agenda->tgl_kegiatan)->format('d M') }}</small>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <small class="text-muted"><i class="bi bi-clock"></i> {{ $agenda->jam_mulai }}</small>
-                                        <small class="text-muted"><i class="bi bi-geo-alt"></i> {{ $agenda->tempat_kegiatan }}</small>
+                                        <small class="text-muted"><i class="bi bi-geo-alt"></i>
+                                            {{ $agenda->tempat_kegiatan }}</small>
                                     </div>
                                 </div>
                             @empty
@@ -372,7 +382,8 @@
                         </div>
                         <div class="card-body recent-list">
                             @forelse($recentAttendances as $attendance)
-                                <div class="recent-item mb-3 p-3 border rounded bg-{{ str_replace(' ', '_', $attendance->status) }}">
+                                <div
+                                    class="recent-item mb-3 p-3 border rounded bg-{{ str_replace(' ', '_', $attendance->status) }}">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="d-flex align-items-center mb-1">
@@ -425,7 +436,8 @@
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <small class="text-muted">{{ $assessment->kategori }}</small>
-                                        <small class="text-muted">{{ \Carbon\Carbon::parse($assessment->created_at)->format('d M') }}</small>
+                                        <small
+                                            class="text-muted">{{ \Carbon\Carbon::parse($assessment->created_at)->format('d M') }}</small>
                                     </div>
                                 </div>
                             @empty

@@ -36,7 +36,8 @@
                                                 <th>#</th>
                                                 <th>Nama Indikator</th>
                                                 <th>Deskripsi</th>
-                                                <th>Action</th>
+                                                <th>Skor</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -44,20 +45,21 @@
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $indicator->name }}</td>
-                                                    <td>{{ $indicator->description ?? '-' }}</td>
+                                                    <td>{{ $indicator->description ?: '-' }}</td>
+                                                    <td>{{ $indicator->score }}</td>
                                                     <td>
-                                                        <div class="action-buttons">
+                                                        <div class="btn-group" role="group">
                                                             <a href="{{ route('indikator.edit', $indicator->id) }}"
-                                                                class="btn btn-warning btn-action">
-                                                                <i class="fas fa-edit"></i> Edit
+                                                                class="btn btn-warning btn-sm" title="Edit">
+                                                                <i class="fas fa-edit"> Edit</i>
                                                             </a>
                                                             <form action="{{ route('indikator.hapus', $indicator->id) }}" method="POST"
-                                                                class="d-inline delete-form">
+                                                                class="d-inline delete-form"> 
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button"
-                                                                    class="btn btn-danger btn-action delete-btn">
-                                                                    <i class="fas fa-trash"></i> Hapus
+                                                                    class="btn btn-danger btn-sm delete-btn" title="Hapus">
+                                                                    <i class="fas fa-trash"> Hapus</i>
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -77,7 +79,7 @@
 
     @push('scripts')
         <!-- SweetAlert2 from CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.18/dist/sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Other scripts -->
         <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
@@ -86,10 +88,21 @@
 
         <script>
             $(document).ready(function () {
-                $('#table-indikator').DataTable();
+                $('#table-indikator').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
+                    },
+                    "columnDefs": [
+                        {
+                            "targets": [4],
+                            "orderable": false,
+                            "searchable": false
+                        }
+                    ]
+                });
 
                 // SweetAlert for delete confirmation
-                $('.delete-btn').click(function (e) {
+                $(document).on('click', '.delete-btn', function (e) {
                     e.preventDefault();
                     var form = $(this).closest('form');
 
@@ -111,13 +124,13 @@
                 });
 
                 // Show success message if exists
-                @if(session('message'))
+                @if(session('success'))
                     Swal.fire({
                         icon: 'success',
                         title: 'Sukses!',
-                        text: '{{ session('message') }}',
+                        text: '{{ session('success') }}',
                         timer: 3000,
-                        showConfirmButton: true
+                        showConfirmButton: false
                     });
                 @endif
 

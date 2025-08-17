@@ -11,5 +11,6 @@ class Indicators extends Model
     protected $fillable = [
         'name',
         'description',
+        'score',
     ];
 }
