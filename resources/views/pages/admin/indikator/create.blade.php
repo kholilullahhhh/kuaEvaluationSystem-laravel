@@ -53,7 +53,8 @@
                                     <div class="form-group">
                                         <label for="description">Deskripsi</label>
                                         <textarea name="description" id="description"
-                                            class="form-control @error('description') is-invalid @enderror" rows="4"
+                                            class="form-control @error('description') is-invalid @enderror" rows="6"
+                                            style="min-height: 120px; resize: vertical;"
                                             placeholder="Masukkan Deskripsi Indikator (Opsional)">{{ old('description') }}</textarea>
                                         @error('description')
                                             <div class="invalid-feedback">
@@ -62,25 +63,6 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="score">Skor <span class="text-danger">*</span></label>
-                                        <select name="score" id="score"
-                                            class="form-control select2 @error('score') is-invalid @enderror" required>
-                                            <option value="">Pilih Skor</option>
-                                            @for($i = 1; $i <= 4; $i++)
-                                                <option value="{{ $i }}" {{ old('score') == $i ? 'selected' : '' }}>{{ $i }}
-                                                </option>
-                                            @endfor
-                                        </select>
-                                        @error('score')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                        <small class="form-text text-muted">
-                                            Skala 1-4 (1 = Terendah, 4 = Tertinggi)
-                                        </small>
-                                    </div>
                                 </div>
 
                                 <div class="card-footer text-right">

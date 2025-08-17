@@ -25,18 +25,6 @@ class User extends Authenticatable
         'role'
     ];
 
-    public function class()
-    {
-        return $this->belongsTo(Classes::class, 'class_id', 'id');
-    }
-    public function spp()
-    {
-        return $this->belongsTo(SppPlan::class, 'spp_id', 'id');
-    }
-    public function payment()
-    {
-        return $this->hasMany(Payment::class, 'siswa_id', 'id');
-    }
 
 
 

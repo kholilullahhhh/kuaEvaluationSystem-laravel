@@ -36,7 +36,6 @@
                                                 <th>#</th>
                                                 <th>Nama Indikator</th>
                                                 <th>Deskripsi</th>
-                                                <th>Skor</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -46,19 +45,18 @@
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $indicator->name }}</td>
                                                     <td>{{ $indicator->description ?: '-' }}</td>
-                                                    <td>{{ $indicator->score }}</td>
                                                     <td>
-                                                        <div class="btn-group" role="group">
+                                                        <div class="action-buttons">
                                                             <a href="{{ route('indikator.edit', $indicator->id) }}"
                                                                 class="btn btn-warning btn-sm" title="Edit">
                                                                 <i class="fas fa-edit"> Edit</i>
                                                             </a>
-                                                            <form action="{{ route('indikator.hapus', $indicator->id) }}" method="POST"
-                                                                class="d-inline delete-form"> 
+                                                            <form action="{{ route('indikator.hapus', $indicator->id) }}"
+                                                                method="POST" class="d-inline delete-form">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-sm delete-btn" title="Hapus">
+                                                                <button type="button" class="btn btn-danger btn-sm delete-btn"
+                                                                    title="Hapus">
                                                                     <i class="fas fa-trash"> Hapus</i>
                                                                 </button>
                                                             </form>
@@ -142,7 +140,7 @@
                         text: '{{ session('error') }}',
                     });
                 @endif
-            });
+                    });
         </script>
     @endpush
 @endsection

@@ -69,9 +69,9 @@
                                                     <td>{{ $data->keterangan ?? '-' }}</td>
                                                     <td>{{ $data->created_at->format('d F Y H:i') }}</td>
                                                     <td>
-                                                        @if($absensi->dokumentasi)
+                                                        @if($data->dokumentasi)
                                                             <img class="img img-fluid" width="100"
-                                                                src="{{ asset('upload/dokumentasi/' . $absensi->dokumentasi) }}"
+                                                                src="{{ asset('upload/dokumentasi/' . $data->dokumentasi) }}"
                                                                 alt="Dokumentasi">
                                                         @else
                                                             -

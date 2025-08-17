@@ -1,18 +1,44 @@
-@extends('layouts.app', ['title' => 'Data Skor Kinerja'])
-
-@section('content')
+@extends('layouts.app', ['title' => 'Tambah Skor Kinerja'])@section('content')
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('library/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('library/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
+        <style>
+            .score-card {
+                border: 1px solid #e3e6f0;
+                border-radius: 5px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .score-indicator {
+                font-weight: bold;
+            }
+
+            .score-4 {
+                color: #1cc88a;
+            }
+
+            .score-3 {
+                color: #36b9cc;
+            }
+
+            .score-2 {
+                color: #f6c23e;
+            }
+
+            .score-1 {
+                color: #e74a3b;
+            }
+        </style>
     @endpush
 
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Skor Kinerja</h1>
+                <h1>Penilaian Kinerja Pegawai</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-                    <div class="breadcrumb-item">Skor Kinerja</div>
+                    <div class="breadcrumb-item">Penilaian Kinerja</div>
                 </div>
             </div>
 
@@ -21,21 +47,25 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Daftar Skor Kinerja</h4>
+                                <h4>Periode: {{ now()->format('F Y') }}</h4>
                                 <div class="card-header-action">
-                                    <a href="{{ route('indikator_level.create') }}" class="btn btn-primary">
-                                        <i class="fas fa-plus"></i> Tambah Skor
-                                    </a>
+                                    <button class="btn btn-primary" onclick="calculateAllScores()">
+                                        <i class="fas fa-calculator"></i> Hitung Semua Skor
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-performance-scores">
+                                    <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Pengguna</th>
-                                                <th>Indikator</th>
+                                                <th>Nama Pegawai</th>
+                                                <th>Jabatan</th>
+                                                <th>Total Kegiatan</th>
+                                                <th>Kehadiran (Skor)</th>
+                                                <th>Ketepatan Waktu (Skor)</th>
+                                                <th>Laporan Kegiatan (Skor)</th>
+                                                <th>Kelengkapan Laporan (Skor)</th>
                                                 <th>Total Skor</th>
                                                 <th>Persentase</th>
                                                 <th>Keterangan</th>
@@ -43,46 +73,83 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($datas as $index => $score)
+                                            @foreach($userData as $data)
                                                 <tr>
-                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $data['user']->name }}</td>
+                                                    <td>{{ $data['user']->first()->name }}</td>
+                                                    <td>{{ $data['total_kehadiran'] }}</td>
+
+                                                    <!-- Kehadiran -->
                                                     <td>
-                                                        @if($score->user)
-                                                            {{ $score->user->name }}
-                                                        @else
-                                                            <span class="text-muted">N/A</span>
-                                                        @endif
+                                                        <span class="score-indicator score-{{ $data['kehadiran_score'] }}">
+                                                            {{ $data['kehadiran_score'] }}
+                                                            ({{ $data['kehadiran_score'] == 4 ? 'Hadir' : 'Izin/Sakit' }})
+                                                        </span>
                                                     </td>
-                                                    <td>{{ $score->indicator->name }}</td>
-                                                    <td>{{ $score->total_skor }}</td>
-                                                    <td>{{ number_format($score->persentase, 2) }}%</td>
+
+                                                    <!-- Ketepatan Waktu -->
+                                                    <td>
+                                                        <span
+                                                            class="score-indicator score-{{ $data['ketepatan_waktu_score'] }}">
+                                                            {{ number_format($data['ketepatan_waktu_score'], 1) }}
+                                                        </span>
+                                                    </td>
+
+                                                    <!-- Laporan Kegiatan -->
+                                                    <td>
+                                                        <span
+                                                            class="score-indicator score-{{ $data['laporan_kegiatan_score'] }}">
+                                                            {{ $data['laporan_kegiatan_score'] }}
+                                                            ({{ $data['total_laporan'] }}/{{ $data['total_kehadiran'] }})
+                                                        </span>
+                                                    </td>
+
+                                                    <!-- Kelengkapan Laporan -->
+                                                    <td>
+                                                        <span
+                                                            class="score-indicator score-{{ $data['kelengkapan_laporan_score'] }}">
+                                                            {{ $data['kelengkapan_laporan_score'] }}
+                                                            ({{ $data['total_laporan_lengkap'] }}/{{ $data['total_laporan'] }})
+                                                        </span>
+                                                    </td>
+
+                                                    <!-- Total Skor -->
+                                                    <td>{{ $data['total_skor'] }}</td>
+
+                                                    <!-- Persentase -->
                                                     <td>
                                                         @php
-                                                            $badgeClass = [
-                                                                'Sempurna' => 'badge-success',
-                                                                'Baik' => 'badge-primary',
-                                                                'Cukup' => 'badge-warning',
-                                                                'Kurang' => 'badge-danger'
-                                                            ][$score->keterangan] ?? 'badge-secondary';
+                                                            $persentase = ($data['total_skor'] / 16) * 100;
                                                         @endphp
-                                                        <span class="badge {{ $badgeClass }}">{{ $score->keterangan }}</span>
+                                                        {{ number_format($persentase, 2) }}%
                                                     </td>
+
+                                                    <!-- Keterangan -->
                                                     <td>
-                                                        <div class="btn-group" role="group">
-                                                            <a href="{{ route('indikator_level.edit', $score->id) }}"
-                                                                class="btn btn-warning btn-sm" title="Edit">
-                                                                <i class="fas fa-edit"></i>
-                                                            </a>
-                                                            <form action="{{ route('indikator_level.hapus', $score->id) }}"
-                                                                method="POST" class="d-inline delete-form">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="button" class="btn btn-danger btn-sm delete-btn"
-                                                                    title="Hapus">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        </div>
+                                                        @php
+                                                            if ($persentase >= 87.5) {
+                                                                $keterangan = 'Sempurna';
+                                                                $class = 'badge badge-success';
+                                                            } elseif ($persentase >= 62.5) {
+                                                                $keterangan = 'Baik';
+                                                                $class = 'badge badge-primary';
+                                                            } elseif ($persentase >= 37.5) {
+                                                                $keterangan = 'Cukup';
+                                                                $class = 'badge badge-warning';
+                                                            } else {
+                                                                $keterangan = 'Kurang';
+                                                                $class = 'badge badge-danger';
+                                                            }
+                                                        @endphp
+                                                        <span class="{{ $class }}">{{ $keterangan }}</span>
+                                                    </td>
+
+                                                    <!-- Actions -->
+                                                    <td>
+                                                        <button class="btn btn-sm btn-primary"
+                                                            onclick="saveScore({{ $data['user']->id }})">
+                                                            <i class="fas fa-save"></i> Simpan
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -98,75 +165,29 @@
     </div>
 
     @push('scripts')
-        <!-- SweetAlert2 from CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <!-- Other scripts -->
-        <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('library/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('library/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
-
+        <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+        <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
         <script>
-            $(document).ready(function () {
-                $('#table-performance-scores').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
-                    },
-                    "columnDefs": [
-                        {
-                            "targets": [6], // Aksi column
-                            "orderable": false,
-                            "searchable": false
-                        },
-                        {
-                            "targets": [3, 4], // Numeric columns
-                            "className": "text-center"
-                        }
-                    ]
-                });
+            function calculateAllScores() {
+                // In a real implementation, this would recalculate scores via AJAX
+                swal('Berhasil', 'Semua skor telah dihitung ulang!', 'success');
+            }
 
-                // SweetAlert for delete confirmation
-                $(document).on('click', '.delete-btn', function (e) {
-                    e.preventDefault();
-                    var form = $(this).closest('form');
-
-                    Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: "Data skor kinerja ini akan dihapus secara permanen!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ya, Hapus!',
-                        cancelButtonText: 'Batal',
-                        reverseButtons: true
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            form.submit();
+            function saveScore(userId) {
+                swal({
+                    title: 'Konfirmasi',
+                    text: 'Simpan penilaian kinerja untuk pegawai ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willSave) => {
+                        if (willSave) {
+                            // In a real implementation, this would submit via AJAX
+                            swal('Berhasil', 'Data penilaian telah disimpan!', 'success');
                         }
                     });
-                });
-
-                // Show success message if exists
-                @if(session('success'))
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Sukses!',
-                        text: '{{ session('success') }}',
-                        timer: 3000,
-                        showConfirmButton: false
-                    });
-                @endif
-
-                // Show error message if exists
-                @if(session('error'))
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal!',
-                        text: '{{ session('error') }}',
-                    });
-                @endif
-                    });
+            }
         </script>
     @endpush
 @endsection

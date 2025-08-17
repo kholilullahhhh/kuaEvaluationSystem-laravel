@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('agenda_id');
             $table->string('user_id')->nullable();
-            $table->string('dokumentasi');
+            $table->string('dokumentasi')->nullable();
             $table->enum('status', ['hadir', 'tidak hadir', 'izin', 'sakit', 'terlambat']); //status kehadiran
             $table->string('keterangan')->nullable(); // Optional field for additional notes
             $table->timestamps();

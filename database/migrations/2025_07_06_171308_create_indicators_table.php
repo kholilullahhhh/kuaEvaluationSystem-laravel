@@ -14,8 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->integer('score');// 1-4
-
             $table->timestamps();
         });
     }

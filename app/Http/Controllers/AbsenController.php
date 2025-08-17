@@ -24,7 +24,9 @@ class AbsenController extends Controller
     public function userCreate()
     {
         $menu = $this->menu;
-        $agendas = Agenda::where('status', 'publish')->get();
+        // agenda user
+        $userId = auth()->id();
+        $agendas = Agenda::where('user_id', $userId)->get();
         return view('pages.user.absen.create', compact('agendas', 'menu'));
     }
     public function userStore(Request $request)

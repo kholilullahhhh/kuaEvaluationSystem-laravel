@@ -13,11 +13,25 @@ return new class extends Migration {
         Schema::create('performance_scores', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
-            $table->string('indicator_id');
-            // hasil perhitungan
-            $table->integer('total_skor');
-            $table->decimal('persentase', 5, 2); // ex: 75.00
-            $table->string('keterangan'); // Baik, Cukup, Kurang, Sempurna
+
+            $table->date('periode')->nullable(); // Added for period tracking (monthly)
+
+            // Indicators with scores 1-4
+            $table->integer('kehadiran')->default(0);           // 1-4
+            $table->integer('ketepatan_waktu')->default(0);     // 1-4
+            $table->integer('laporan_kegiatan')->default(0);    // 1-4
+            $table->integer('kelengkapan_laporan')->default(0); // 1-4
+
+            // Calculation results
+            $table->integer('total_skor')->default(0);
+            $table->decimal('persentase', 5, 2)->default(0);
+            $table->string('keterangan'); // Sempurna, Baik, Cukup, Kurang
+
+            // Additional metrics for reference
+            $table->integer('total_absensi')->default(0);
+            $table->integer('total_laporan')->default(0);
+            $table->integer('total_laporan_lengkap')->default(0);
+
             $table->timestamps();
         });
     }
