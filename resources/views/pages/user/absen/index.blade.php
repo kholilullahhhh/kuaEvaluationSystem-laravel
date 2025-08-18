@@ -13,12 +13,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4>Daftar Kehadiran Rapat</h4>
+                                @if (session('role') == 'user' || session('role') == 'penghulu')
                                 <div class="card-header-action">
                                     <a href="{{ route('user.absensi.create') }}" class="btn btn-primary">
                                         <i class="fas fa-plus"></i> Isi Absensi
                                     </a>
                                 </div>
-                            </div>
+                                @endif
+                            </div> 
+                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped">
@@ -28,6 +31,7 @@
                                                 <th>Agenda Rapat</th>
                                                 <th>Status Kehadiran</th>
                                                 <th>Keterangan</th>
+                                                <th>Laporan</th>
                                                 <th>Dokumentasi</th>
                                                 <th>Tanggal</th>
                                             </tr>
@@ -60,6 +64,17 @@
                                                     </td>
                                                     <td>{{ $absensi->keterangan ?? '-' }}</td>
                                                     <td>{{ $absensi->created_at->format('d M Y H:i') }}</td>
+                                                    <td>
+                                                        @if($absensi->laporan)
+                                                            <a href="{{ asset('upload/laporan/' . $absensi->laporan) }}" 
+                                                               target="_blank" 
+                                                               class="btn btn-sm btn-outline-primary">
+                                                                <i class="fas fa-download"></i> Unduh
+                                                            </a>
+                                                        @else
+                                                            <span class="text-muted">-</span>
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if($absensi->dokumentasi)
                                                             <img class="img img-fluid" width="100"

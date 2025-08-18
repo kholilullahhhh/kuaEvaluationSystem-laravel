@@ -84,8 +84,23 @@
                                         <div class="col-sm-12 col-md-7">
                                             <div id="image-preview" class="image-preview">
                                                 <label for="image-upload" id="image-label">Pilih File</label>
-                                                <input type="file" name="dokumentasi" id="image-upload" required />
+                                                <input type="file" name="dokumentasi" id="image-upload" />
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Laporan
+                                            (PDF)</label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <div class="custom-file">
+                                                <input type="file" name="laporan" id="laporan" class="custom-file-input"
+                                                    accept="application/pdf">
+                                                <label class="custom-file-label" for="laporan">Pilih file laporan</label>
+                                            </div>
+                                            <small class="text-muted">Format: PDF (Maks. 5MB)</small>
+                                            @error('laporan')
+                                                <div class="text-danger mt-1">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 

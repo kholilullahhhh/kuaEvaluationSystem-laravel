@@ -43,7 +43,7 @@ class AdminSeeder extends Seeder
         $users = [
             [
                 'name' => 'Hj. Rosdiana, S.Pd.I',
-                'username' => ' ',
+                'username' => 'rosdiana',
                 'nip' => '197709142014112001',
                 'role' => 'user', // penyuluh
             ],

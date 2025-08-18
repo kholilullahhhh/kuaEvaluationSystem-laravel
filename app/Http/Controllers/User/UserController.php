@@ -16,9 +16,9 @@ class UserController extends Controller
     public function index()
     {
         $datas = array(
-            'modul' => Modul::orderByDesc('id')->skip(0)->take(10)->get(),
+            // 'modul' => Modul::orderByDesc('id')->skip(0)->take(10)->get(),
             'agenda' => Agenda::orderByDesc('id')->skip(0)->take(10)->get(),
-            'artikel' => Artikel::orderByDesc('id')->skip(0)->take(10)->get(),
+            // 'artikel' => Artikel::orderByDesc('id')->skip(0)->take(10)->get(),
         );
 
         // dd($datas);

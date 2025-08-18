@@ -386,12 +386,7 @@
                                     class="recent-item mb-3 p-3 border rounded bg-{{ str_replace(' ', '_', $attendance->status) }}">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <div class="d-flex align-items-center mb-1">
-                                                <div class="avatar-sm mr-2">
-                                                    {{ substr($attendance->user->name, 0, 1) }}
-                                                </div>
-                                                <h6 class="font-weight-bold mb-0">{{ $attendance->user->name }}</h6>
-                                            </div>
+                                            
                                             <small class="text-muted">
                                                 {{ $attendance->agenda->judul }}
                                             </small>

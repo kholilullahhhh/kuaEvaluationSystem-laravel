@@ -130,7 +130,12 @@ class PerformanceScoreController extends Controller
     private function calculateKelengkapanLaporanScore($absensiRecords)
     {
         $totalLaporan = $absensiRecords->filter(fn($r) => !empty($r->dokumentasi))->count();
-        $totalLengkap = $absensiRecords->filter(fn($r) => !empty($r->dokumentasi) && !empty($r->keterangan))->count();
+        $totalLengkap = $absensiRecords->filter(
+            fn($r) =>
+            !empty($r->dokumentasi) &&
+            !empty($r->keterangan) &&
+            !empty($r->laporan)
+        )->count();
 
         if ($totalLaporan == 0)
             return 0;
@@ -147,6 +152,7 @@ class PerformanceScoreController extends Controller
             return 1;
         return 0;
     }
+
 
     private function determineKeterangan($score)
     {

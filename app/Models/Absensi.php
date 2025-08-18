@@ -12,6 +12,7 @@ class Absensi extends Model
         'agenda_id',
         'user_id',
         'dokumentasi', // foto bukti dokumentasi kegiatan 
+        'laporan', // laporan kegiatan 
         'status',
         'keterangan', // Optional field for additional notes
     ];

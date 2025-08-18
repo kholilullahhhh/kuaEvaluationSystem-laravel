@@ -76,7 +76,19 @@
                                             @foreach($userData as $data)
                                                 <tr>
                                                     <td>{{ $data['user']->name }}</td>
-                                                    <td>{{ $data['user']->first()->name }}</td>
+                                                    <td>
+                                                        @if($data['user']->role == 'user')
+                                                            Penyuluh
+                                                        @elseif($data['user']->role == 'penghulu')
+                                                            Penghulu
+                                                        @elseif($data['user']->role == 'kepala_kua')
+                                                            Kepala KUA
+                                                        @elseif($data['user']->role == 'admin')
+                                                            Admin
+                                                        @else
+                                                            {{ $data['user']->role }}
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $data['total_kehadiran'] }}</td>
 
                                                     <!-- Kehadiran -->

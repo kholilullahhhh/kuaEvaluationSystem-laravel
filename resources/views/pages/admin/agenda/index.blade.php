@@ -53,7 +53,7 @@
 
                                                     $tgl_kegiatan = strftime('%d %B', strtotime($data->tgl_kegiatan));
                                                     $tgl_selesai = strftime('%d %B %Y', strtotime($data->tgl_selesai));
-                                                                                                                                                                                                                                                                            ?>
+                                                                                                                                                                                                                                                                                                                        ?>
                                                                                     <tr>
                                                                                         <td>{{ ++$i }}</td>
                                                                                         <td>{{ $data->judul ?? '' }}</td>
@@ -119,7 +119,7 @@
 
                                                     $tgl_kegiatan = strftime('%d %B', strtotime($data->tgl_kegiatan));
                                                     $tgl_selesai = strftime('%d %B %Y', strtotime($data->tgl_selesai));
-                                                                                                                                                                                                                                                                            ?>
+                                                                                                                                                                                                                                                                                                                        ?>
                                                                                     <tr>
                                                                                         <td>{{ ++$i }}</td>
                                                                                         <td>{{ $data->judul ?? '' }}</td>

@@ -36,27 +36,34 @@ class AbsenController extends Controller
         $r = $request->all();
         $r['user_id'] = $user->id;
 
-        // dd($r);
-        $file = $request->file('dokumentasi');
+        // Upload dokumentasi (gambar)
+        if ($request->hasFile('dokumentasi')) {
+            $foto = $request->file('dokumentasi');
+            $ext = $foto->getClientOriginalExtension();
 
-        // dd($file->getSize() / 1024);
-        // if ($file->getSize() / 1024 >= 512) {
-        //     return redirect()->route('modul.create')->with('message', 'size gambar');
-        // }
+            $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
+            $destinationPath = public_path('upload/dokumentasi');
+            $foto->move($destinationPath, $nameFoto);
 
-        $foto = $request->file('dokumentasi');
-        $ext = $foto->getClientOriginalExtension();
-        // $r['pas_foto'] = $request->file('pas_foto');
+            $r['dokumentasi'] = $nameFoto;
+        }
 
-        $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
-        $destinationPath = public_path('upload/dokumentasi');
+        // Upload laporan (PDF)
+        if ($request->hasFile('laporan')) {
+            $laporan = $request->file('laporan');
+            $ext = $laporan->getClientOriginalExtension();
 
-        $foto->move($destinationPath, $nameFoto);
+            if ($ext != 'pdf') {
+                return redirect()->back()->with('message', 'File laporan harus dalam format PDF');
+            }
 
-        $fileUrl = asset('upload/dokumentasi/' . $nameFoto);
-        // dd($destinationPath);
-        $r['dokumentasi'] = $nameFoto;
-        // dd($r);
+            $nameLaporan = date('Y-m-d_H-i-s_') . "." . $ext;
+            $destinationPath = public_path('upload/laporan');
+            $laporan->move($destinationPath, $nameLaporan);
+
+            $r['laporan'] = $nameLaporan;
+        }
+
         Absensi::create($r);
         return redirect()->route('user.absensi.index')->with('success', 'Data absensi berhasil disimpan');
     }

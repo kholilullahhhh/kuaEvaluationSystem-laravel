@@ -42,31 +42,40 @@ class AbsensiController extends Controller
     {
         $r = $request->all();
 
-        $file = $request->file('dokumentasi');
+        // Upload dokumentasi (gambar)
+        if ($request->hasFile('dokumentasi')) {
+            $foto = $request->file('dokumentasi');
+            $ext = $foto->getClientOriginalExtension();
 
-        // dd($file->getSize() / 1024);
-        // if ($file->getSize() / 1024 >= 512) {
-        //     return redirect()->route('dokumentasi.create')->with('message', 'size gambar');
-        // }
+            $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
+            $destinationPath = public_path('upload/dokumentasi');
+            $foto->move($destinationPath, $nameFoto);
 
-        $foto = $request->file('dokumentasi');
-        $ext = $foto->getClientOriginalExtension();
-        // $r['pas_foto'] = $request->file('pas_foto');
+            $r['dokumentasi'] = $nameFoto;
+        }
 
-        $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
-        $destinationPath = public_path('upload/dokumentasi');
+        // Upload laporan (PDF)
+        if ($request->hasFile('laporan')) {
+            $laporan = $request->file('laporan');
+            $ext = $laporan->getClientOriginalExtension();
 
-        $foto->move($destinationPath, $nameFoto);
+            if ($ext != 'pdf') {
+                return redirect()->back()->with('message', 'File laporan harus dalam format PDF');
+            }
 
-        $fileUrl = asset('upload/dokumentasi/' . $nameFoto);
-        // dd($destinationPath);
-        $r['dokumentasi'] = $nameFoto;
-        // dd($r);
+            $nameLaporan = date('Y-m-d_H-i-s_') . "." . $ext;
+            $destinationPath = public_path('upload/laporan');
+            $laporan->move($destinationPath, $nameLaporan);
+
+            $r['laporan'] = $nameLaporan;
+        }
+
         Absensi::create($r);
 
-        return redirect()->route('absensi.index')->with('message', 'store');
-
+        return redirect()->route('absensi.index')->with('message', 'Data berhasil disimpan');
     }
+
+
     public function edit($id)
     {
         $data = Absensi::find($id);
@@ -79,10 +88,51 @@ class AbsensiController extends Controller
     {
         $r = $request->all();
         $data = Absensi::find($r['id']);
-        // dd($r);
+
+        // Update dokumentasi (gambar)
+        if ($request->hasFile('dokumentasi')) {
+            $foto = $request->file('dokumentasi');
+            $ext = $foto->getClientOriginalExtension();
+
+            $nameFoto = date('Y-m-d_H-i-s_') . "." . $ext;
+            $destinationPath = public_path('upload/dokumentasi');
+
+            // hapus file lama jika ada
+            if ($data->dokumentasi && file_exists($destinationPath . '/' . $data->dokumentasi)) {
+                unlink($destinationPath . '/' . $data->dokumentasi);
+            }
+
+            $foto->move($destinationPath, $nameFoto);
+            $r['dokumentasi'] = $nameFoto;
+        }
+
+        // Update laporan (PDF)
+        if ($request->hasFile('laporan')) {
+            $laporan = $request->file('laporan');
+            $ext = $laporan->getClientOriginalExtension();
+
+            if ($ext != 'pdf') {
+                return redirect()->back()->with('message', 'File laporan harus dalam format PDF');
+            }
+
+            $nameLaporan = date('Y-m-d_H-i-s_') . "." . $ext;
+            $destinationPath = public_path('upload/laporan');
+
+            // hapus file lama jika ada
+            if ($data->laporan && file_exists($destinationPath . '/' . $data->laporan)) {
+                unlink($destinationPath . '/' . $data->laporan);
+            }
+
+            $laporan->move($destinationPath, $nameLaporan);
+            $r['laporan'] = $nameLaporan;
+        }
+
+        // Update data selain file
         $data->update($r);
-        return redirect()->route('absensi.index')->with('message', 'update');
+
+        return redirect()->route('absensi.index')->with('message', 'Data berhasil diperbarui');
     }
+
     public function destroy($id)
     {
         $data = Absensi::find($id);
