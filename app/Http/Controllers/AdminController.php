@@ -58,7 +58,7 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-        $recentAssessments = performance_scores::with(['user', 'indicator'])
+        $recentAssessments = performance_scores::with(['user'])
             ->latest()
             ->take(5)
             ->get();

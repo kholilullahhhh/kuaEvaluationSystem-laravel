@@ -426,9 +426,6 @@
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="badge badge-warning">{{ $assessment->skor_akhir }}/4</span>
                                     </div>
-                                    <div class="mb-2">
-                                        <small class="text-muted">{{ $assessment->indicator->name }}</small>
-                                    </div>
                                     <div class="d-flex justify-content-between">
                                         <small class="text-muted">{{ $assessment->kategori }}</small>
                                         <small
