@@ -14,7 +14,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Data Agenda Rapat</h1>
+                <h1>Data Jadwal Kegiatan</h1>
             </div>
             @if (session('role') == 'admin')
 
@@ -27,7 +27,7 @@
                                     <!-- Navigation Buttons -->
 
                                     <a href="{{ route('agenda.create') }}" class="btn btn-primary text-white my-3">+ Tambah
-                                        Agenda</a>
+                                        Kegiatan</a>
 
                                     <!-- Tables Section -->
                                     <!-- PPNPN -->
@@ -39,7 +39,7 @@
                                                     <th class="text-center">#</th>
                                                     <th>Judul Agenda</th>
                                                     {{-- <th>Isi Agenda</th> --}}
-                                                    <th>Ruangan</th>
+                                                    <th>Lokasi Kegiatan</th>
                                                     <th>Tanggal Agenda</th>
                                                     <th>Jam Agenda</th>
                                                     <th>Status</th>

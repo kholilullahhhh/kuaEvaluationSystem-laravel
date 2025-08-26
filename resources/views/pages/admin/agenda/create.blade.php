@@ -11,7 +11,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Agenda Rapat</h1>
+                <h1>Tambah Jadwal Kegiatan</h1>
             </div>
 
             <div class="section-body">
@@ -35,7 +35,7 @@
                                     </div>
                                     
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Ruangan Agenda</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Lokasi Kegiatan</label>
                                         <div class="col-sm-6 col-md-4">
                                             <input required type="text" value=""
                                                 class="form-control" name="lokasi_kegiatan">

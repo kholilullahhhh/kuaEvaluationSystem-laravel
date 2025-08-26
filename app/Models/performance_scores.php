@@ -9,6 +9,8 @@ class performance_scores extends Model
 {
     use HasFactory;
 
+    protected $table = 'performance_scores';
+
     protected $fillable = [
         'user_id',
         'periode',
@@ -46,13 +48,6 @@ class performance_scores extends Model
             ->whereYear('created_at', $this->periode->year);
     }
 
-    // Calculate total score based on all indicators
-    public function calculateTotalScore()
-    {
-        return $this->kehadiran + $this->ketepatan_waktu +
-            $this->laporan_kegiatan + $this->kelengkapan_laporan;
-    }
-
     // Calculate performance percentage
     public function calculatePercentage()
     {
@@ -72,17 +67,5 @@ class performance_scores extends Model
         } else {
             return self::KURANG;
         }
-    }
-
-    // Automatically set calculated fields when saving
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($model) {
-            $model->total_skor = $model->calculateTotalScore();
-            $model->persentase = $model->calculatePercentage();
-            $model->keterangan = $model->determineKeterangan();
-        });
     }
 }

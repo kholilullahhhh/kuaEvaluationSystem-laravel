@@ -29,7 +29,7 @@
                         </li>
                         <li class="{{ $menu == 'agenda' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('agenda.index') }}">
-                                Data Agenda
+                                Data Kegiatan
                             </a>
                         </li>
 
@@ -65,7 +65,7 @@
 
                 <li class="{{ $menu == 'agenda' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('agenda.index') }}">
-                        <i class="fas fa-wallet"></i> <span>Data Agenda</span>
+                        <i class="fas fa-wallet"></i> <span>Data Kegiatan</span>
                     </a>
                 </li>
 

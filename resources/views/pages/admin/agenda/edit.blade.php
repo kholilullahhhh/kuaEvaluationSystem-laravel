@@ -11,7 +11,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Ubah Agenda Rapat</h1>
+                <h1>Ubah Jadwal Kegiatan</h1>
             </div>
 
             <div class="section-body">
@@ -38,7 +38,7 @@
 
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Lokasi
-                                            Agenda</label>
+                                            Kegiatan</label>
                                         <div class="col-sm-6 col-md-4">
                                             <input required type="text" class="form-control"
                                                 value="{{ $data->tempat_kegiatan }}" name="lokasi_kegiatan">

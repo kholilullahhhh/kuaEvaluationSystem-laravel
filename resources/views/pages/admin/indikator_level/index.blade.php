@@ -93,25 +93,25 @@
 
                                                     <!-- Kehadiran -->
                                                     <td>
-                                                        <span class="score-indicator score-{{ $data['kehadiran_score'] }}">
-                                                            {{ $data['kehadiran_score'] }}
-                                                            ({{ $data['kehadiran_score'] == 4 ? 'Hadir' : 'Izin/Sakit' }})
+                                                        <span class="score-indicator score-{{ $data['kehadiran'] }}">
+                                                            {{ $data['kehadiran'] }}
+                                                            ({{ $data['kehadiran'] == 4 ? 'Hadir' : 'Izin/Sakit' }})
                                                         </span>
                                                     </td>
 
                                                     <!-- Ketepatan Waktu -->
                                                     <td>
                                                         <span
-                                                            class="score-indicator score-{{ $data['ketepatan_waktu_score'] }}">
-                                                            {{ number_format($data['ketepatan_waktu_score'], 1) }}
+                                                            class="score-indicator score-{{ round($data['ketepatan_waktu']) }}">
+                                                            {{ number_format($data['ketepatan_waktu'], 1) }}
                                                         </span>
                                                     </td>
 
                                                     <!-- Laporan Kegiatan -->
                                                     <td>
                                                         <span
-                                                            class="score-indicator score-{{ $data['laporan_kegiatan_score'] }}">
-                                                            {{ $data['laporan_kegiatan_score'] }}
+                                                            class="score-indicator score-{{ $data['laporan_kegiatan'] }}">
+                                                            {{ $data['laporan_kegiatan'] }}
                                                             ({{ $data['total_laporan'] }}/{{ $data['total_kehadiran'] }})
                                                         </span>
                                                     </td>
@@ -119,8 +119,8 @@
                                                     <!-- Kelengkapan Laporan -->
                                                     <td>
                                                         <span
-                                                            class="score-indicator score-{{ $data['kelengkapan_laporan_score'] }}">
-                                                            {{ $data['kelengkapan_laporan_score'] }}
+                                                            class="score-indicator score-{{ $data['kelengkapan_laporan'] }}">
+                                                            {{ $data['kelengkapan_laporan'] }}
                                                             ({{ $data['total_laporan_lengkap'] }}/{{ $data['total_laporan'] }})
                                                         </span>
                                                     </td>
@@ -130,22 +130,19 @@
 
                                                     <!-- Persentase -->
                                                     <td>
-                                                        @php
-                                                            $persentase = ($data['total_skor'] / 16) * 100;
-                                                        @endphp
-                                                        {{ number_format($persentase, 2) }}%
+                                                        {{ number_format($data['persentase'], 2) }}%
                                                     </td>
 
                                                     <!-- Keterangan -->
                                                     <td>
                                                         @php
-                                                            if ($persentase >= 87.5) {
+                                                            if ($data['persentase'] >= 87.5) {
                                                                 $keterangan = 'Sempurna';
                                                                 $class = 'badge badge-success';
-                                                            } elseif ($persentase >= 62.5) {
+                                                            } elseif ($data['persentase'] >= 62.5) {
                                                                 $keterangan = 'Baik';
                                                                 $class = 'badge badge-primary';
-                                                            } elseif ($persentase >= 37.5) {
+                                                            } elseif ($data['persentase'] >= 37.5) {
                                                                 $keterangan = 'Cukup';
                                                                 $class = 'badge badge-warning';
                                                             } else {
@@ -158,10 +155,29 @@
 
                                                     <!-- Actions -->
                                                     <td>
+                                                        <!-- Form Tersembunyi untuk Data -->
+                                                        <form id="form-{{ $data['user']->id }}" class="score-form">
+                                                            @csrf
+                                                            <input type="hidden" name="user_id" value="{{ $data['user']->id }}">
+                                                            <input type="hidden" name="periode" value="{{ now()->format('Y-m-01') }}">
+                                                            <input type="hidden" name="kehadiran" value="{{ $data['kehadiran'] }}">
+                                                            <input type="hidden" name="ketepatan_waktu" value="{{ $data['ketepatan_waktu'] }}">
+                                                            <input type="hidden" name="laporan_kegiatan" value="{{ $data['laporan_kegiatan'] }}">
+                                                            <input type="hidden" name="kelengkapan_laporan" value="{{ $data['kelengkapan_laporan'] }}">
+                                                            <input type="hidden" name="total_absensi" value="{{ $data['total_kehadiran'] }}">
+                                                            <input type="hidden" name="total_laporan" value="{{ $data['total_laporan'] }}">
+                                                            <input type="hidden" name="total_laporan_lengkap" value="{{ $data['total_laporan_lengkap'] }}">
+                                                        </form>
+                                                        
                                                         <button class="btn btn-sm btn-primary"
                                                             onclick="saveScore({{ $data['user']->id }})">
-                                                            <i class="fas fa-save"></i> Simpan
+                                                            <i class="fas fa-save"></i> 
+                                                            {{ $data['existing_score'] ? 'Update' : 'Simpan' }}
                                                         </button>
+                                                        
+                                                        @if($data['existing_score'])
+                                                            <span class="badge badge-success ml-2">Tersimpan</span>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -193,12 +209,35 @@
                     buttons: true,
                     dangerMode: true,
                 })
-                    .then((willSave) => {
-                        if (willSave) {
-                            // In a real implementation, this would submit via AJAX
-                            swal('Berhasil', 'Data penilaian telah disimpan!', 'success');
-                        }
-                    });
+                .then((willSave) => {
+                    if (willSave) {
+                        // Kirim data via AJAX
+                        const formData = new FormData(document.getElementById(`form-${userId}`));
+                        
+                        fetch('{{ route("indikator_level.store") }}', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                swal('Berhasil', data.message, 'success').then(() => {
+                                    // Reload halaman untuk memperbarui status
+                                    location.reload();
+                                });
+                            } else {
+                                swal('Error', data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            swal('Error', 'Terjadi kesalahan: ' + error, 'error');
+                        });
+                    }
+                });
             }
         </script>
     @endpush

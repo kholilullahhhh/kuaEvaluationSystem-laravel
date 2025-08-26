@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Indicators;
 use Illuminate\Http\Request;
 use App\Models\performance_scores;
+use Illuminate\Support\Facades\DB;
 use App\Models\user;
 use App\Models\Agenda;
 use App\Models\Absensi;
@@ -31,7 +32,6 @@ class PerformanceScoreController extends Controller
         // Ambil User
         $users = User::whereIn('role', ['user', 'penghulu'])->get();
 
-
         // Prepare data for each user
         $userData = [];
 
@@ -57,19 +57,25 @@ class PerformanceScoreController extends Controller
             $persentase = ($totalSkor / 16) * 100; // 16 is max possible score (4 indicators × 4)
             $keterangan = $this->determineKeterangan($persentase);
 
+            // Check if score already exists
+            $existingScore = performance_scores::where('user_id', $user->id)
+                ->where('periode', now()->format('Y-m-01'))
+                ->first();
+
             $userData[] = [
                 'user' => $user,
                 'absensi_records' => $absensiRecords,
                 'total_kehadiran' => $totalKehadiran,
                 'total_laporan' => $totalLaporan,
                 'total_laporan_lengkap' => $totalLaporanLengkap,
-                'kehadiran_score' => $kehadiranScore,
-                'ketepatan_waktu_score' => $ketepatanWaktuScore,
-                'laporan_kegiatan_score' => $laporanKegiatanScore,
-                'kelengkapan_laporan_score' => $kelengkapanLaporanScore,
+                'kehadiran' => $kehadiranScore,
+                'ketepatan_waktu' => $ketepatanWaktuScore,
+                'laporan_kegiatan' => $laporanKegiatanScore,
+                'kelengkapan_laporan' => $kelengkapanLaporanScore,
                 'total_skor' => $totalSkor,
                 'persentase' => $persentase,
                 'keterangan' => $keterangan,
+                'existing_score' => $existingScore,
             ];
         }
 
@@ -177,40 +183,89 @@ class PerformanceScoreController extends Controller
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'periode' => 'required|date',
-            'kehadiran' => 'required|integer|between:1,4',
-            'ketepatan_waktu' => 'required|integer|between:1,4',
-            'laporan_kegiatan' => 'required|integer|between:1,4',
-            'kelengkapan_laporan' => 'required|integer|between:1,4',
+            'kehadiran' => 'required|numeric|between:0,4',
+            'ketepatan_waktu' => 'required|numeric|between:0,4',
+            'laporan_kegiatan' => 'required|numeric|between:0,4',
+            'kelengkapan_laporan' => 'required|numeric|between:0,4',
             'total_absensi' => 'required|integer|min:0',
             'total_laporan' => 'required|integer|min:0',
             'total_laporan_lengkap' => 'required|integer|min:0',
         ]);
 
-        // Calculate derived fields
-        $totalSkor = $validated['kehadiran'] + $validated['ketepatan_waktu'] +
-            $validated['laporan_kegiatan'] + $validated['kelengkapan_laporan'];
-        $persentase = ($totalSkor / 16) * 100;
-        $keterangan = $this->determineKeterangan($persentase);
+        try {
+            DB::beginTransaction();
 
-        // Create performance score
-        performance_scores::create([
-            'user_id' => $validated['user_id'],
-            'periode' => $validated['periode'],
-            'kehadiran' => $validated['kehadiran'],
-            'ketepatan_waktu' => $validated['ketepatan_waktu'],
-            'laporan_kegiatan' => $validated['laporan_kegiatan'],
-            'kelengkapan_laporan' => $validated['kelengkapan_laporan'],
-            'total_skor' => $totalSkor,
-            'persentase' => $persentase,
-            'keterangan' => $keterangan,
-            'total_absensi' => $validated['total_absensi'],
-            'total_laporan' => $validated['total_laporan'],
-            'total_laporan_lengkap' => $validated['total_laporan_lengkap'],
-        ]);
+            // Calculate total score and percentage
+            $totalSkor = $validated['kehadiran'] + $validated['ketepatan_waktu'] +
+                $validated['laporan_kegiatan'] + $validated['kelengkapan_laporan'];
 
-        return redirect()->route('indikator_level.index')
-            ->with('success', 'Data penilaian kinerja berhasil disimpan.');
+            $persentase = ($totalSkor / 16) * 100;
+
+            // Determine performance category
+            if ($persentase >= 87.5) {
+                $keterangan = 'Sempurna';
+            } elseif ($persentase >= 62.5) {
+                $keterangan = 'Baik';
+            } elseif ($persentase >= 37.5) {
+                $keterangan = 'Cukup';
+            } else {
+                $keterangan = 'Kurang';
+            }
+
+            // Check if score already exists for this user and period
+            $existingScore = performance_scores::where('user_id', $validated['user_id'])
+                ->where('periode', $validated['periode'])
+                ->first();
+
+
+            if ($existingScore) {
+                // Update existing score
+                $existingScore->update([
+                    'kehadiran' => $validated['kehadiran'],
+                    'ketepatan_waktu' => $validated['ketepatan_waktu'],
+                    'laporan_kegiatan' => $validated['laporan_kegiatan'],
+                    'kelengkapan_laporan' => $validated['kelengkapan_laporan'],
+                    'total_skor' => $totalSkor,
+                    'persentase' => $persentase,
+                    'keterangan' => $keterangan,
+                    'total_absensi' => $validated['total_absensi'],
+                    'total_laporan' => $validated['total_laporan'],
+                    'total_laporan_lengkap' => $validated['total_laporan_lengkap'],
+                ]);
+            } else {
+                // Create new score
+                performance_scores::create([
+                    'user_id' => $validated['user_id'],
+                    'periode' => $validated['periode'],
+                    'kehadiran' => $validated['kehadiran'],
+                    'ketepatan_waktu' => $validated['ketepatan_waktu'],
+                    'laporan_kegiatan' => $validated['laporan_kegiatan'],
+                    'kelengkapan_laporan' => $validated['kelengkapan_laporan'],
+                    'total_skor' => $totalSkor,
+                    'persentase' => $persentase,
+                    'keterangan' => $keterangan,
+                    'total_absensi' => $validated['total_absensi'],
+                    'total_laporan' => $validated['total_laporan'],
+                    'total_laporan_lengkap' => $validated['total_laporan_lengkap'],
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data penilaian kinerja berhasil disimpan.'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
+
 
 
     /**
