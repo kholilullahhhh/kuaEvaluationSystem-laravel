@@ -168,280 +168,282 @@
             </div>
 
             <!-- Summary Cards Row -->
-
-            <div class="row mb-4">
-                <!-- User Statistics -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon"
-                                    style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
-                                    <i class="bi bi-people"></i>
-                                </div>
-                                <div>
-                                    <div class="card-label">Total Pengguna</div>
-                                    <div class="card-value">{{ $totalUsers }}</div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between small text-muted mb-1">
-                                    <span>Admin</span>
-                                    <span>{{ $adminCount }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between small text-muted mb-1">
-                                    <span>Kepala KUA</span>
-                                    <span>{{ $kepalaKuaCount }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between small text-muted">
-                                    <span>Pegawai</span>
-                                    <span>{{ $pegawaiCount }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Agenda Statistics -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon"
-                                    style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                                    <i class="bi bi-calendar-event"></i>
-                                </div>
-                                <div>
-                                    <div class="card-label">Total Agenda</div>
-                                    <div class="card-value">{{ $totalAgendas }}</div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <div class="progress progress-thin mb-2">
-                                    <div class="progress-bar bg-success"
-                                        style="width: {{ $totalAgendas ? round(($agendasThisMonth / $totalAgendas) * 100) : 0 }}%">
+            @if (session('role') == 'admin')
+                <div class="row mb-4">
+                    <!-- User Statistics -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon"
+                                        style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div>
+                                        <div class="card-label">Total Pengguna</div>
+                                        <div class="card-value">{{ $totalUsers }}</div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between small text-muted">
-                                    <span>Agenda Bulan Ini</span>
-                                    <span>{{ $agendasThisMonth }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Attendance Statistics -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon"
-                                    style="background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);">
-                                    <i class="bi bi-clipboard-check"></i>
-                                </div>
-                                <div>
-                                    <div class="card-label">Total Absensi</div>
-                                    <div class="card-value">{{ $totalAttendances }}</div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between small text-muted mb-1">
-                                    <span>Hadir</span>
-                                    <span>{{ $hadirCount }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between small text-muted mb-1">
-                                    <span>Tidak Hadir</span>
-                                    <span>{{ $tidakHadirCount }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between small text-muted">
-                                    <span>Izin</span>
-                                    <span>{{ $izinCount }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Performance Statistics -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon"
-                                    style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">
-                                    <i class="bi bi-graph-up"></i>
-                                </div>
-                                <div>
-                                    <div class="card-label">Penilaian Kinerja</div>
-                                    <div class="card-value">{{ $totalAssessments }}</div>
-                                </div>
-                            </div>
-                            <div class="mt-3">
-                                <div class="text-center mb-2">
-                                    <span class="h4 font-weight-bold">{{ $averageScore }}</span>
-                                    <span class="text-muted small">/ 4.0</span>
-                                </div>
-                                <div class="progress progress-thin">
-                                    <div class="progress-bar bg-warning" style="width: {{ ($averageScore / 4) * 100 }}%"></div>
-                                </div>
-                                <div class="text-center small text-muted mt-1">Rata-rata Skor</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts Row -->
-            <div class="row mb-4">
-                <!-- Monthly Attendance Chart -->
-                <div class="col-lg-8 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Statistik Kehadiran Tahun {{ $selectedYear }}</h6>
-                            <div class="d-flex">
-                                <select id="yearSelect" class="form-control form-control-sm">
-                                    @foreach(range(date('Y') - 2, date('Y')) as $year)
-                                        <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container">
-                                <div id="attendanceChart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Attendance Distribution -->
-                <div class="col-lg-4 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-header">
-                            <h6 class="m-0 font-weight-bold text-primary">Distribusi Kehadiran</h6>
-                        </div>
-                        <div class="card-body">
-                            <div id="attendanceDistributionChart"></div>
-                            <div class="mt-3 text-center small">
-                                <span class="mr-2"><i class="fas fa-circle text-success"></i> Hadir</span>
-                                <span class="mr-2"><i class="fas fa-circle text-danger"></i> Tidak Hadir</span>
-                                <span class="mr-2"><i class="fas fa-circle text-info"></i> Izin</span>
-                                <span class="mr-2"><i class="fas fa-circle text-secondary"></i> Sakit</span>
-                                <span><i class="fas fa-circle text-warning"></i> Terlambat</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Activities Row -->
-            <div class="row">
-                <!-- Recent Agendas -->
-                <div class="col-lg-4 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Agenda Terbaru</h6>
-                            <a href="{{ route('agenda.index') }}" class="btn btn-sm btn-primary">
-                                <i class="bi bi-list-ul"></i> Lihat Semua
-                            </a>
-                        </div>
-                        <div class="card-body recent-list">
-                            @forelse($recentAgendas as $agenda)
-                                <div class="recent-item mb-3 p-3 border rounded">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 class="font-weight-bold mb-0">{{ $agenda->judul }}</h6>
-                                        <small
-                                            class="text-muted">{{ \Carbon\Carbon::parse($agenda->tgl_kegiatan)->format('d M') }}</small>
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Admin</span>
+                                        <span>{{ $adminCount }}</span>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <small class="text-muted"><i class="bi bi-clock"></i> {{ $agenda->jam_mulai }}</small>
-                                        <small class="text-muted"><i class="bi bi-geo-alt"></i>
-                                            {{ $agenda->tempat_kegiatan }}</small>
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Kepala KUA</span>
+                                        <span>{{ $kepalaKuaCount }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <span>Pegawai</span>
+                                        <span>{{ $pegawaiCount }}</span>
                                     </div>
                                 </div>
-                            @empty
-                                <div class="text-center py-4">
-                                    <i class="bi bi-calendar-x text-muted" style="font-size: 3rem;"></i>
-                                    <p class="mt-2">Belum ada agenda</p>
-                                </div>
-                            @endforelse
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Recent Attendances -->
-                <div class="col-lg-4 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Absensi Terbaru</h6>
-                            <a href="{{ route('absensi.index') }}" class="btn btn-sm btn-primary">
-                                <i class="bi bi-list-ul"></i> Lihat Semua
-                            </a>
-                        </div>
-                        <div class="card-body recent-list">
-                            @forelse($recentAttendances as $attendance)
-                                <div
-                                    class="recent-item mb-3 p-3 border rounded bg-{{ str_replace(' ', '_', $attendance->status) }}">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            
-                                            <small class="text-muted">
-                                                {{ $attendance->agenda->judul }}
-                                            </small>
+                    <!-- Agenda Statistics -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon"
+                                        style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                                        <i class="bi bi-calendar-event"></i>
+                                    </div>
+                                    <div>
+                                        <div class="card-label">Total Agenda</div>
+                                        <div class="card-value">{{ $totalAgendas }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="progress progress-thin mb-2">
+                                        <div class="progress-bar bg-success"
+                                            style="width: {{ $totalAgendas ? round(($agendasThisMonth / $totalAgendas) * 100) : 0 }}%">
                                         </div>
-                                        <div class="text-right">
-                                            <span class="status-badge bg-{{ str_replace(' ', '_', $attendance->status) }}">
-                                                {{ ucfirst($attendance->status) }}
-                                            </span>
-                                            <div class="text-muted small mt-1">
-                                                {{ \Carbon\Carbon::parse($attendance->created_at)->format('d M') }}
+                                    </div>
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <span>Agenda Bulan Ini</span>
+                                        <span>{{ $agendasThisMonth }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Statistics -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon"
+                                        style="background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);">
+                                        <i class="bi bi-clipboard-check"></i>
+                                    </div>
+                                    <div>
+                                        <div class="card-label">Total Absensi</div>
+                                        <div class="card-value">{{ $totalAttendances }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Hadir</span>
+                                        <span>{{ $hadirCount }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Tidak Hadir</span>
+                                        <span>{{ $tidakHadirCount }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <span>Izin</span>
+                                        <span>{{ $izinCount }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Statistics -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon"
+                                        style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">
+                                        <i class="bi bi-graph-up"></i>
+                                    </div>
+                                    <div>
+                                        <div class="card-label">Penilaian Kinerja</div>
+                                        <div class="card-value">{{ $totalAssessments }}</div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="text-center mb-2">
+                                        <span class="h4 font-weight-bold">{{ $averageScore }}</span>
+                                        <span class="text-muted small">/ 4.0</span>
+                                    </div>
+                                    <div class="progress progress-thin">
+                                        <div class="progress-bar bg-warning" style="width: {{ ($averageScore / 4) * 100 }}%">
+                                        </div>
+                                    </div>
+                                    <div class="text-center small text-muted mt-1">Rata-rata Skor</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row mb-4">
+                    <!-- Monthly Attendance Chart -->
+                    <div class="col-lg-8 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Statistik Kehadiran Tahun {{ $selectedYear }}</h6>
+                                <div class="d-flex">
+                                    <select id="yearSelect" class="form-control form-control-sm">
+                                        @foreach(range(date('Y') - 2, date('Y')) as $year)
+                                            <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <div id="attendanceChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Distribution -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-header">
+                                <h6 class="m-0 font-weight-bold text-primary">Distribusi Kehadiran</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="attendanceDistributionChart"></div>
+                                <div class="mt-3 text-center small">
+                                    <span class="mr-2"><i class="fas fa-circle text-success"></i> Hadir</span>
+                                    <span class="mr-2"><i class="fas fa-circle text-danger"></i> Tidak Hadir</span>
+                                    <span class="mr-2"><i class="fas fa-circle text-info"></i> Izin</span>
+                                    <span class="mr-2"><i class="fas fa-circle text-secondary"></i> Sakit</span>
+                                    <span><i class="fas fa-circle text-warning"></i> Terlambat</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities Row -->
+                <div class="row">
+                    <!-- Recent Agendas -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Agenda Terbaru</h6>
+                                <a href="{{ route('agenda.index') }}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-list-ul"></i> Lihat Semua
+                                </a>
+                            </div>
+                            <div class="card-body recent-list">
+                                @forelse($recentAgendas as $agenda)
+                                    <div class="recent-item mb-3 p-3 border rounded">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="font-weight-bold mb-0">{{ $agenda->judul }}</h6>
+                                            <small
+                                                class="text-muted">{{ \Carbon\Carbon::parse($agenda->tgl_kegiatan)->format('d M') }}</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted"><i class="bi bi-clock"></i> {{ $agenda->jam_mulai }}</small>
+                                            <small class="text-muted"><i class="bi bi-geo-alt"></i>
+                                                {{ $agenda->tempat_kegiatan }}</small>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="text-center py-4">
+                                        <i class="bi bi-calendar-x text-muted" style="font-size: 3rem;"></i>
+                                        <p class="mt-2">Belum ada agenda</p>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Attendances -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Absensi Terbaru</h6>
+                                <a href="{{ route('absensi.index') }}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-list-ul"></i> Lihat Semua
+                                </a>
+                            </div>
+                            <div class="card-body recent-list">
+                                @forelse($recentAttendances as $attendance)
+                                    <div
+                                        class="recent-item mb-3 p-3 border rounded bg-{{ str_replace(' ', '_', $attendance->status) }}">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+
+                                                <small class="text-muted">
+                                                    {{ $attendance->agenda->judul }}
+                                                </small>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="status-badge bg-{{ str_replace(' ', '_', $attendance->status) }}">
+                                                    {{ ucfirst($attendance->status) }}
+                                                </span>
+                                                <div class="text-muted small mt-1">
+                                                    {{ \Carbon\Carbon::parse($attendance->created_at)->format('d M') }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="text-center py-4">
-                                    <i class="bi bi-clipboard-x text-muted" style="font-size: 3rem;"></i>
-                                    <p class="mt-2">Belum ada absensi</p>
-                                </div>
-                            @endforelse
+                                @empty
+                                    <div class="text-center py-4">
+                                        <i class="bi bi-clipboard-x text-muted" style="font-size: 3rem;"></i>
+                                        <p class="mt-2">Belum ada absensi</p>
+                                    </div>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Recent Assessments -->
-                <div class="col-lg-4 mb-4">
-                    <div class="dashboard-card card h-100">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">Penilaian Terbaru</h6>
-                            <a href="{{ route('indikator_level.index') }}" class="btn btn-sm btn-primary">
-                                <i class="bi bi-list-ul"></i> Lihat Semua
-                            </a>
-                        </div>
-                        <div class="card-body recent-list">
-                            @forelse($recentAssessments as $assessment)
-                                <div class="recent-item mb-3 p-3 border rounded">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge badge-warning">{{ $assessment->skor_akhir }}/4</span>
+                    <!-- Recent Assessments -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="dashboard-card card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Penilaian Terbaru</h6>
+                                <a href="{{ route('indikator_level.index') }}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-list-ul"></i> Lihat Semua
+                                </a>
+                            </div>
+                            <div class="card-body recent-list">
+                                @forelse($recentAssessments as $assessment)
+                                    <div class="recent-item mb-3 p-3 border rounded">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge badge-warning">{{ $assessment->skor_akhir }}/4</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-muted">{{ $assessment->kategori }}</small>
+                                            <small
+                                                class="text-muted">{{ \Carbon\Carbon::parse($assessment->created_at)->format('d M') }}</small>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <small class="text-muted">{{ $assessment->kategori }}</small>
-                                        <small
-                                            class="text-muted">{{ \Carbon\Carbon::parse($assessment->created_at)->format('d M') }}</small>
+                                @empty
+                                    <div class="text-center py-4">
+                                        <i class="bi bi-clipboard-x text-muted" style="font-size: 3rem;"></i>
+                                        <p class="mt-2">Belum ada penilaian</p>
                                     </div>
-                                </div>
-                            @empty
-                                <div class="text-center py-4">
-                                    <i class="bi bi-clipboard-x text-muted" style="font-size: 3rem;"></i>
-                                    <p class="mt-2">Belum ada penilaian</p>
-                                </div>
-                            @endforelse
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </section>
     </div>
 
